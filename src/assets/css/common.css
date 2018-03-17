@@ -1,0 +1,428 @@
+@import "reset.css";
+@import "animate.css";
+/*@import "../../../static/font/iconfont.css";*/
+
+html,
+body {}
+
+html {
+  /*全局缩放比例*/
+  font-size: 625%;
+}
+
+/* max-width */
+
+@media screen and (max-width: 320px) {
+  html {
+    /*全局缩放比例*/
+    font-size: 470%;
+  }
+}
+
+/* min-width & max-width */
+
+@media screen and (min-width: 321px) and (max-width: 375px) {
+  html {
+    /*全局缩放比例*/
+    font-size: 625%;
+  }
+}
+
+/* min-width */
+
+@media screen and (min-width: 376px) and (max-width: 420px) {
+  html {
+    /*全局缩放比例*/
+    font-size: 680%;
+  }
+}
+
+@media screen and (min-width: 421px) {
+  html {
+    /*全局缩放比例*/
+    font-size: 625%;
+  }
+}
+
+body {
+  font-size: .14rem;
+  font-family: 微软雅黑;
+  /*font-family: Microsoft YaHei;*/
+  /*font: 14px/1.6 Tahoma,microsoft yahei,"微软雅黑","宋体";*/
+}
+
+a:hover,
+a:active,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  /*width: 100%;*/
+}
+
+body {
+  -moz-user-select: none;
+  /*火狐*/
+  -webkit-user-select: none;
+  /*webkit浏览器*/
+  -ms-user-select: none;
+  /*IE10*/
+  -khtml-user-select: none;
+  /*早期浏览器*/
+  user-select: none;
+}
+
+body {
+  padding-right: 0 !important;
+}
+
+#app {
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'webfont';
+  src: url('//at.alicdn.com/t/webfont_j855i1d4leszia4i.eot');
+  /* IE9*/
+  src: url('//at.alicdn.com/t/webfont_j855i1d4leszia4i.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/webfont_j855i1d4leszia4i.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/webfont_j855i1d4leszia4i.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/webfont_j855i1d4leszia4i.svg#思源黑体-正粗') format('svg');
+  /* iOS 4.1- */
+}
+
+.nomargin {
+  margin: 0 !important;
+}
+
+a.zhbtn {
+  display: inline-block;
+  height: 30px;
+  line-height: 29px;
+  background-color: #fafbfe;
+  border-radius: 2px;
+  border: 1px solid #eaeaea;
+  color: #787878;
+  font-size: 12px;
+  padding: 0 10px;
+  min-width: 64px;
+  text-align: center;
+  margin-right: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: .5s;
+}
+
+a.zhbtn>i {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+a.zhbtn:hover {
+  background-color: rgba(255, 183, 83, 0.12);
+  color: #ff8c64;
+  border: 1px solid rgba(255, 146, 95, 0.24);
+}
+
+a.zhbtn.primary {
+  color: #fff;
+  background-color: #ffa72c;
+  border-color: #ffa72c;
+}
+
+a.zhbtn.primary:hover {
+  background-color: rgba(255, 157, 34, 0.69);
+  color: #fff;
+  border: 1px solid rgba(255, 146, 95, 0.53);
+}
+
+i.zhibtn {
+  cursor: pointer;
+}
+
+i.zhibtn:hover {
+  color: #ffa72c;
+}
+
+table.zhtable {
+  width: 100%;
+}
+
+table.zhtable.fillet {
+  /*border: 1px solid #eaeaea;*/
+  /*border-radius: 10px 10px 0 0 ;*/
+  /*overflow: hidden;*/
+}
+
+table.zhtable.border-col>thead {
+  border: 1px solid #eaeaea;
+  border-radius: 10px 10px 0 0;
+}
+
+table.zhtable>thead {
+  background-color: #fafbfe;
+}
+
+table.zhtable>thead>th {
+  height: 48px;
+  line-height: 48px;
+  color: #333;
+  font-size: 13px;
+  font-family: 微软雅黑;
+}
+
+table.zhtable.border-col>tbody>tr {
+  border: 1px solid #eaeaea;
+}
+
+table.zhtable.border-col>tbody>tr:hover {
+  background-color: rgba(250, 251, 254, 0.75);
+}
+
+table.zhtable>tbody>tr>td {
+  height: 42px;
+  line-height: 42px;
+  /*border: 1px solid #eaeaea;*/
+}
+
+table.zhtable.border-all>tbody>tr>td {
+  border: 1px solid #eaeaea
+}
+
+table.zhtable.center>tbody>tr>td,
+table.zhtable>tbody>tr.center>td,
+table.zhtable>tbody>tr>td.center {
+  text-align: center;
+}
+
+/* 分页代码修改 */
+
+.ftpage {
+  /* overflow: hidden; */
+  text-align: center;
+  margin-top: .4rem;
+}
+
+.ftpage .el-pager li {
+  font-size: 13px;
+  min-width: 36px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.ftpage .el-pagination button,
+.el-pagination span {
+  /* font-size: 16px; */
+  min-width: 36px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.ftpage .el-pager li.btn-quicknext,
+.ftpage .el-pager li.btn-quickprev {
+  line-height: 36px;
+}
+
+.ftpage .el-pager li:hover,
+.ftpage .el-pagination button:hover {
+  color: #5D6D88;
+}
+
+.ftpage .el-pager li.active {
+  border-color: #5D6D88;
+  background-color: #5D6D88;
+  color: #fff;
+  height: 40px;
+  line-height: 40px;
+  width: 38px;
+  margin-top: -2px;
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: transparent;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 1px #eaeaea;   */
+  border-radius: 2px;
+  background-color: transparent;
+}
+
+/*定义滑块 内阴影+圆角*/
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  /* -webkit-box-shadow: inset 0 0 1px #eaeaea;   */
+  background-color: #c5c5c5;
+}
+
+/* element ui 折叠修改 */
+
+.el-collapse-item__header {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 5px !important;
+}
+
+/* 滚动条 */
+
+.dn_opts_cont::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background-color: transparent;
+}
+
+.dn_grid_body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+
+.dn_grid_body::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 1px #eaeaea;   */
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+/*定义滑块 内阴影+圆角*/
+
+.dn_grid_body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  /* -webkit-box-shadow: inset 0 0 1px #eaeaea;   */
+  background-color: #c5c5c5;
+}
+
+.wbipt_select_right .el-input__inner {
+  height: 34px !important;
+}
+
+.wbipt_select_right .el-select{
+  width: 100%;
+}
+.dn_opts_modselt .el-input__inner {
+  height: 33px !important;
+  width: 100% !important;
+}
+
+.dn_opts_modselt .el-select{
+  width: 100%;
+}
+.dn_opts_contmenu>.el-radio-group{
+  margin-top: 15px;
+}
+
+.dn_opts_modselt .el-select .el-input__inner:focus {
+  border-color: #23b7e5 !important;
+}
+
+
+.dn_dasetrdo_right .el-radio__input.is-checked+.el-radio__label {
+  color: #23b7e5 !important;
+}
+
+.dn_dasetrdo_right .el-radio__input.is-checked .el-radio__inner {
+  border-color: #23b7e5 !important;
+  background: #23b7e5 !important;
+}
+.el-collapse-item__header{
+  padding: 0 5px 0 15px !important;
+}
+.el-radio-button__orig-radio:checked+.el-radio-button__inner{
+  background-color: #23b7e5 !important;
+  border-color: #23b7e5 !important;
+  -webkit-box-shadow: -1px 0 0 0 #23b7e5 !important;
+  box-shadow: -1px 0 0 0 #23b7e5 !important;
+}
+.el-radio-button__inner:hover{
+  color:  #23b7e5 !important;
+}
+.el-radio-button__orig-radio:checked+.el-radio-button__inner:hover{
+  color: #fff !important;
+}
+.grid-stack > .grid-stack-item > .grid-stack-item-content{
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  top: 5px;
+  /* overflow: hidden; */
+  overflow: inherit !important;
+}
+.grid-stack > .grid-stack-item > .ui-resizable-se{
+  right: 5px;
+  bottom: 5px;
+  height: 21px;
+  width: 21px;
+  background-size: 100% auto;
+  /* transform: scale(1.5); */
+}
+.el-color-picker{
+  height: 34px !important;
+}
+.el-color-picker__trigger{
+  width: 140px !important;
+  height: 34px !important;
+}
+.dn_stack_placeholder{
+  background-color: #d4d4d4;
+  
+}
+#phone_design{
+  height: 100%;
+}
+
+.el-button.is-plain:focus, .el-button.is-plain:hover{
+  color: #23b7e5 !important;
+  background: #ecf5ff !important;
+  border-color: #b3d8ff !important;
+}
+
+.el-button--primary.is-plain:focus,
+ .el-button--primary.is-plain:hover,
+ .el-button--primary.is-plain:active
+ {
+  color: #fff !important;
+  background-color: #23b7e5 !important;
+  border-color: #23b7e5 !important;
+}
+.el-slider__bar{
+  background-color: #23b7e5 !important;
+}
+.el-slider__button{
+  border-color: #23b7e5 !important;
+}
+.el-select .el-input.is-focus .el-input__inner,.el-select .el-input__inner:focus{
+  border-color: #23b7e5 !important;
+}
+.el-select-dropdown__item.selected{
+  color: #23b7e5 !important;
+}
+.el-input-number__decrease, .el-input-number__increase{
+  top: 1px !important;
+}
+.el-input-number--small{
+  width: 100% !important;
+}
+.el-input-number__decrease:hover, .el-input-number__increase:hover{
+  color: #23b7e5 !important;
+}
+.el-input-number__decrease:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled), .el-input-number__increase:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled){
+  border-color: #23b7e5 !important;
+}

@@ -1,0 +1,26 @@
+{
+    "opts":[
+        {
+            "groupName":"常规",
+            "groupType":"g1",
+            "members":[
+                {
+                  "title":"标题",
+                  "describe":"标题名称",
+                  
+                }
+            ]
+       
+    },
+    {
+        "groupName":"标题",
+        "groupType":"g1",
+        "members":[
+            
+        ]
+   
+}
+],
+    "contents":{},
+    "others":{}
+}

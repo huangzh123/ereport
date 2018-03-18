@@ -134,7 +134,7 @@ let opt = {
           title: '字体大小',
           describe: '',
           remark: '',
-          min: 12,
+          min: 0,
           model: "contents.title.textStyle.fontSize",
           component: 'webInputNum'
         },
@@ -307,7 +307,23 @@ let opt = {
           ]
         },
         {
-          title: 'X轴名称',
+          title: '位 置',
+          describe: '',
+          remark: '',
+          model: "contents.xAxis.position",
+          component: 'webSelect',
+          options: [{
+              label: '底部',
+              value: 'bottom',
+            },
+            {
+              label: '顶部',
+              value: 'top',
+            },
+          ]
+        },
+        {
+          title: '名 称',
           describe: '',
           remark: '',
           model: "contents.xAxis.name",
@@ -317,7 +333,7 @@ let opt = {
           title: '字体大小',
           describe: '',
           remark: '',
-          min: 12,
+          min: 0,
           model: "contents.xAxis.nameTextStyle.fontSize",
           component: 'webInputNum'
         },
@@ -332,8 +348,8 @@ let opt = {
           title: '名称角度',
           describe: '',
           remark: '',
-          min: 0,
-          max: 360,
+          min: -90,
+          max: 90,
           model: "contents.xAxis.nameRotate",
           component: 'webInputSlider',
         },
@@ -358,22 +374,6 @@ let opt = {
           ]
         },
         {
-          title: 'X轴位置',
-          describe: '',
-          remark: '',
-          model: "contents.xAxis.position",
-          component: 'webSelect',
-          options: [{
-              label: '底部',
-              value: 'bottom',
-            },
-            {
-              label: '顶部',
-              value: 'top',
-            },
-          ]
-        },
-        {
           title: '坐标反转',
           describe: '',
           remark: '',
@@ -390,7 +390,7 @@ let opt = {
           ]
         },
         {
-          title: '轴线',
+          title: '轴 线',
           describe: '',
           remark: '',
           model: "contents.xAxis.axisLine.show",
@@ -437,7 +437,7 @@ let opt = {
           component: 'webInputColor'
         },
         {
-          title: '刻度',
+          title: '刻 度',
           describe: '',
           remark: '',
           model: "contents.xAxis.axisTick.show",
@@ -489,6 +489,9 @@ let opt = {
           describe: '',
           remark: '设置为0强制显示所有标签',
           min: 0,
+          isShow(opts) {
+            return false;
+          },
           model: "contents.xAxis.axisLabel.interval",
           component: 'webInputNum',
         },
@@ -509,20 +512,20 @@ let opt = {
           ]
         },
         {
-            title: '标签颜色',
-            describe: '',
-            remark: '',
-            model: "contents.xAxis.axisLabel.color",
-            component: 'webInputColor'
-          },
-          {
-            title: '字体大小',
-            describe: '',
-            remark: '',
-            min: 0,
-            model: "contents.xAxis.axisLabel.fontSize",
-            component: 'webInputNum',
-          },
+          title: '标签颜色',
+          describe: '',
+          remark: '',
+          model: "contents.xAxis.axisLabel.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '字体大小',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.xAxis.axisLabel.fontSize",
+          component: 'webInputNum',
+        },
         {
           title: '标签角度',
           describe: '',
@@ -982,8 +985,8 @@ let opt = {
         formatter: '{value}',
         showMinLabel: null,
         showMaxLabel: null,
-        color:"",
-        fontSize :12,
+        color: "",
+        fontSize: 12,
         show: true //隐藏刻度
       },
       boundaryGap: false, //中间描点

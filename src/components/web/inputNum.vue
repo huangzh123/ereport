@@ -1,5 +1,5 @@
 <template>
-  <div class="wbipt_text_ctn">
+  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others})">
     <div class="wbipt_text_left">
       <span>{{setting.title}}</span>
     </div>

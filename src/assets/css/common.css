@@ -415,7 +415,7 @@ table.zhtable>tbody>tr>td.center {
   color: #23b7e5 !important;
 }
 .el-input-number__decrease, .el-input-number__increase{
-  top: 1px !important;
+  top: 2px !important;
 }
 .el-input-number--small{
   width: 100% !important;

@@ -25,7 +25,6 @@
       };
     },
     mounted() {
-      console.log(this.options)
       this.value = this.returnVal(this.contents,this.others, this.setting.model);
     },
     methods: {

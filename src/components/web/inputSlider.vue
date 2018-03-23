@@ -1,5 +1,5 @@
 <template>
-  <div class="wbipt_text_ctn">
+  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
     <div class="wbipt_text_left">
       <span>{{setting.title}}</span>
     </div>
@@ -21,29 +21,27 @@ export default {
       },
       returnFormat(val) {
         return val;
-      },
-      returnInit(val) {
-        return val;
       }
     };
   },
   mounted() {
-    this.returnInit = this.setting.initformat || this.returnInit;
     let v = this.returnVal(this.contents,this.others, this.setting.model);
-    this.value = this.returnInit(v);
+    if(this.setting.initformat) v = this.setting.initformat(v);
+    this.value = v;
+
   },
   methods: {
     updateValue(value) {
-      this.returnFormat = this.setting.format || this.returnFormat;
-      let v = this.returnFormat(value);
+      let v = value;
+      if(this.setting.format) v = this.setting.format(value);
       this.$emit("updateValue", v, this.setting.model, this.cid); //自定义事件，并传参
     }
   },
   watch: {
     cid(val) {
-      this.returnInit = this.setting.initformat || this.returnInit;
       let v = this.returnVal(this.contents,this.others, this.setting.model);
-      this.value = this.returnInit(v);
+      if(this.setting.initformat) v = this.setting.initformat(v);
+      this.value = v;
     }
   }
 };
@@ -58,7 +56,7 @@ export default {
   margin: 5px 0 15px;
 }
 .wbipt_text_left {
-  width: 70px;
+   width: 21%;
   min-width: 70px;
   flex-grow: 0;
   padding-right: 5px;

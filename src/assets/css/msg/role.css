@@ -1,0 +1,266 @@
+#role{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+#role>.top-bar{
+  position: absolute;
+  width: 100%;
+}
+#role>.top-bar>.title{
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #eaeaea;
+  background-color: #fff;
+  padding-left: 20px;
+}
+#role>.top-bar>.title>h1{
+  font-size: 18px;
+  font-family: 华文细黑;
+  color: #606060;
+}
+#role>.top-bar>.title>h1>i{
+  font-size: 12px;
+  color: #f7a02c;
+}
+#role>.top-bar>.menu{
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  background-color: #fff;
+  padding-left: 20px;
+}
+#role>.top-bar>.menu a.zhbtn{
+  height: 34px;
+  line-height: 33px;
+  color: #ffa72c;
+}
+#role>.top-bar>.menu a.zhbtn>i{
+  font-size: 15px;
+}
+#role>.child-container{
+  padding: 12px 20px;
+  box-sizing: border-box;
+  padding-top: 72px;
+  padding-bottom: 20px;
+  height: 100%;
+  overflow: hidden;
+}
+
+#role>.child-container>.rcontents{
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding:20px;
+  min-height: 100%;
+  position: relative;
+}
+
+.role-left{
+  position: relative;
+  height: 100%;
+  width:270px;
+  background-color: #7c9bc70d;
+  /* padding:0 20px; */
+  padding-top: 65px;
+  /* max-height: 800px; */
+  /* overflow-y: auto; */
+}
+.role-right{
+  position: relative;
+  flex-grow: 1;
+  width:400px;
+  height: 100%;
+  background-color: #7c9bc70d;
+  margin-left: 40px;
+  padding-bottom:65px;
+  padding-top: 95px;
+}
+.double-arrows{
+  position: absolute;
+  top: 50%;
+  left: 300px;
+  font-size: 15px;
+  margin-top: -7.5px;
+  /* margin-left: 29.5px; */
+}
+.double-arrows>i{
+  font-size: 20px;
+  color: #93a0b3;
+}
+.role-left>.title,.role-right>.title{
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+}
+.role-left>.title>h1,.role-right>.title>h1{
+  height: 30px;
+  line-height: 22px;
+  font-size: 16px;
+  text-align: center;
+  margin: 20px 0 5px;
+  color: #7c9bc7;
+  border-bottom: 2px solid #7c9bc7;
+  font-weight: 600;
+}
+.role-right>h1{
+  margin-bottom: 10px;
+}
+.role-left>ul{
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 20px;
+  /* margin: 10px 0 30px; */
+}
+.role-left>ul>li{
+  height: 40px;
+  line-height: 40px;
+  color: #4c4c4c;
+  cursor: pointer;
+  font-size: 13px;
+  padding-left: 30px;
+}
+.role-left>ul>li>i {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #7c9bc7;
+}
+.role-left>ul>li.active{
+  color: #476171;
+  background-color: #9cbae475;
+  transition: .5s;
+}
+.role-right>.title>span{
+  display: block;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.role-right>.title>span>.el-checkbox{
+  float: right;
+  margin-right: 10px;
+  height: 30px;
+  line-height: 35px;
+  
+}
+.role-right>.title>span .el-checkbox__label{
+  padding-left: 8px;
+}
+.role-right>.title>span .el-checkbox__inner{
+  border-radius: 50%;
+}
+.role-right>.contents{
+  height: 100%;
+  overflow: auto;
+}
+.app-group{
+  height: 100%;
+  position: relative;
+  overflow: auto;
+  padding: 0 20px;
+}
+.app-group>h2{
+  height: 35px;
+  line-height: 35px;
+  font-size: 12px;
+  /* margin-top: 10px; */
+  color: #5d5b5b;
+  background-color: #c8d4e675;
+  padding-left: 20px;
+}
+.app-group>.apps{
+  margin: 20px 0 0;
+}
+.app-item{
+  display: inline-block;
+  /* height: 90px; */
+  /* width: 60px; */
+  min-width: 80px;
+  /* margin:0 15px 0 0; */
+  /* border: 1px solid #eaeaea; */
+  text-align: center;
+  font-size: 0;
+  padding: 5px 0;
+  box-sizing: content-box;
+  position: relative;
+  padding: 5px 0;
+  background-color: #ffffff52;
+  margin-bottom: 10px;
+  cursor: pointer;
+  
+}
+
+.app-item>img{
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+  min-height: 55px;
+  margin:0 auto;
+  opacity: .3;
+}
+.app-item>h3{
+  height: 26px;
+  font-size: 12px;
+  line-height: 26px;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: .3;
+}
+.is-checked+.el-checkbox__label>.app-item>*{
+  transition: .5s;
+  opacity: 1;
+}
+/* .app-group>.apps>.el-checkbox{
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: -4px;
+  margin-top: -4px;
+} */
+.app-group>.apps .el-checkbox__inner{
+  border-radius: 50%;
+}
+.app-group>.apps .el-checkbox__input{
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: -1px;
+  margin-top: -5px;
+}
+.app-group>.apps .el-checkbox__input.is-focus .el-checkbox__inner{
+  border:1px solid #bfcbd9;
+}
+.app-group>.apps>.el-checkbox {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+.role-right>.commit{
+  height: 65px;
+  line-height: 65px;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  /* margin-top: 30px; */
+  left: 0;
+  right: 0;
+  padding-right: 20px;
+  border-top: 1px solid #cfd8e9;
+
+}
+.role-right>.commit>.zhbtn{
+  height: 38px;
+  line-height: 38px;
+}
+.role-right>.commit>a.zhbtn.primary{
+  /* background-color: #1296db;
+  border-color: #1296db; */
+}
+#role .app-group>.apps>.el-checkbox{
+  /* min-height: 101px; */
+  /* background-color: #fff; */
+}

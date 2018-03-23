@@ -26,6 +26,19 @@ const CONFIG = (function () {
     APP_CODE,
     IP_APP,
     REST: {
+      //报表
+      getChartDetail: IP + "/rest/report/getReportById?appCode="+APP_CODE, //获取单个报表详情
+      getChartList: IP + "/rest/report/reportList?appCode="+APP_CODE, //获取报表列表
+      saveChart: IP + "/rest/report/saveReport?appCode="+APP_CODE, //保存报表
+      editChart: IP + "/rest/report/editReport?appCode="+APP_CODE, //修改报表
+      deleteChart: IP + "/rest/report/delReport?appCode="+APP_CODE, //删除报表
+      verifReportCode: IP + "/rest/report/verifReportCode?appCode="+APP_CODE, //验证报表编码重复性
+      //报表类型
+      getChartTypes: IP + "/rest/report/reportTypeList?appCode="+APP_CODE, //获取报表类型
+      createChartTypes: IP + "/rest/report/saveReportType?appCode="+APP_CODE, //新增报表类型
+      delReportType: IP + "/rest/report/delReportType?appCode="+APP_CODE, //删除报表类型
+      editReportType: IP + "/rest/report/editReportType?appCode="+APP_CODE, //修改报表类型
+      //数据源
       dataSourceList: IP + "/rest/report/dataSourceList?appCode="+APP_CODE, //获取数据源
       connectDataSource: IP + "/rest/report/connectDataSource?appCode="+APP_CODE, //获取数据（执行SQL语句）
     },

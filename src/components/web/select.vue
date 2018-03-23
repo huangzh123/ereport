@@ -1,5 +1,5 @@
 <template>
-  <div :ref='cid' class="wbipt_select_ctn" v-show="!setting.isShow || setting.isShow({others:this.others})">
+  <div :ref='cid' class="wbipt_select_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
     <div class="wbipt_select_left">
       <span>{{setting.title}}</span>
     </div>
@@ -78,7 +78,7 @@
     margin: 5px 0 15px;
   }
   .wbipt_select_left {
-    width: 70px;
+     width: 21%;
     min-width: 70px;
     flex-grow: 0;
     padding-right: 5px;

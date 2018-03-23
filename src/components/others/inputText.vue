@@ -1,11 +1,15 @@
 <template>
-  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
+  <div class="wbipt_text_ctn" >
     <div class="wbipt_text_left">
-      <span>{{setting.title}}</span>
+      <span>{{title}}</span>
     </div>
     <div class="wbipt_text_right">
-      <el-input-number v-model="num" size="small" @change="updateValue" :min="setting.min || 0" :step="setting.step || 1" :max="setting.max || 100" label="描述文字"></el-input-number>
-       <p v-show="setting.remark">{{setting.remark}}</p>
+      <input 
+      type="text" 
+      :placeholder="placeholder" 
+      :value="value" 
+      v-on:input="updateValue($event.target.value)">
+      <p v-show="remark">{{remark}}</p>
     </div>
   </div>
   
@@ -13,26 +17,15 @@
 
 <script>
 export default {
-  props: ["setting", "cid", "contents", "others"],
+  props: ["title", "placeholder", "value", "remark"],
   data() {
     return {
-       returnVal: (contents, others,str) => {
-        return eval(str);
-      },
-      num:1
     };
   },
-   mounted(){
-    this.num =  this.returnVal( this.contents,this.others, this.setting.model)
-  },
+  mounted() {},
   methods: {
     updateValue(value) {
-      this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
-    }
-  },
-    watch: {
-    cid(val){
-      this.num =  this.returnVal( this.contents,this.others, this.setting.model)
+      this.$emit("updateValue", value); //自定义事件，并传参
     }
   }
 };
@@ -47,7 +40,7 @@ export default {
   margin: 5px 0 15px;
 }
 .wbipt_text_left {
-    width: 21%;
+     width: 21%;
     min-width: 70px;
   flex-grow: 0;
   padding-right: 5px;

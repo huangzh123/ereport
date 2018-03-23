@@ -1,0 +1,93 @@
+
+#form-type>.top-bar{}
+#form-type>.top-bar>.title{
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #eaeaea;
+  background-color: #fff;
+  padding-left: 20px;
+}
+#form-type>.top-bar>.title>h1{
+  font-size: 18px;
+  font-family: 华文细黑;
+  color: #606060;
+}
+#form-type>.top-bar>.title>h1>i{
+  font-size: 12px;
+  color: #f7a02c;
+}
+#form-type>.top-bar>.menu{
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  background-color: #fff;
+  padding-left: 20px;
+}
+#form-type>.top-bar>.menu a.zhbtn{
+  height: 34px;
+  line-height: 33px;
+  color: #ffa72c;
+}
+#form-type>.top-bar>.menu a.zhbtn>i{
+  font-size: 15px;
+}
+#form-type>.child-container{
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+#form-type .child-form{
+  /* min-height: 400px; */
+  width: 100%;
+  border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 40px 25px;
+}
+#form-type .child-form .el-table th,#form-type .child-form .el-table th>div{
+  background-color: #fafbfe !important;
+}
+#form-type .child-form .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #fafbfe !important;
+}
+#form-type .child-form>.menus{
+  position: relative;
+  /*height: 40px;*/
+  margin-bottom: 20px;
+}
+#form-type .child-form>.menus>.zhbtn{
+  height: 36px;
+  line-height: 35px;
+  border-radius: 2px;
+}
+#form-type .child-form>.menus>.zhbtn.del{
+  background-color: #ff706b;
+}
+#form-type .child-form>.menus>.zhbtn.del:hover{
+  background-color: rgba(255, 73, 73, 0.67);
+}
+#form-type .child-form>.menus>.search{
+  float: right;
+  display: inline-block;
+  width: 260px;
+  margin-left: 20px;
+}
+#form-type .child-form>.menus>.search input{
+  font-size: 13px;
+  font-family: 微软雅黑;
+}
+#form-type .child-form .el-table td, .el-table th{
+  height: 46px;
+}
+#form-type .child-form .el-switch__label,#form-type .child-form .el-switch__label *{
+  font-size: 12px;
+}
+.el-table__body-wrapper{
+  overflow: hidden;
+}
+#form-type .child-form .el-table .zhbtn{
+  height: 28px;
+  line-height: 27px;
+}
+#form-type .child-form .el-table .zhibtn:hover{
+  color: inherit;
+}

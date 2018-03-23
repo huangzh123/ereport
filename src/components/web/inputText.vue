@@ -1,5 +1,5 @@
 <template>
-  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others})">
+  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
     <div class="wbipt_text_left">
       <span>{{setting.title}}</span>
     </div>
@@ -44,7 +44,7 @@ export default {
   margin: 5px 0 15px;
 }
 .wbipt_text_left {
-    width: 70px;
+     width: 21%;
     min-width: 70px;
   flex-grow: 0;
   padding-right: 5px;

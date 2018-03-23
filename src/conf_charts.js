@@ -898,6 +898,7 @@ export const CONF = {
               return val + '%';
             },
             initformat(val) {
+              console.log(val)
               return parseInt(val.substr(0, val.length - 1))
             },
             model: "contents.series[0].center[0]",
@@ -2499,7 +2500,7 @@ export const CONF = {
       backgroundColor: "#fff"
     }
   },
-  //漏斗图
+  //极坐标图
   sunburst: {
     //   名称
     name: 'sunburst',

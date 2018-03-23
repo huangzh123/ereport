@@ -13,6 +13,7 @@
   height: 50px;
   width: 100%;
   background-color: #353f46;
+  transition: .8s;
 }
 
 .dn_backbtn {
@@ -42,6 +43,7 @@
   height: 50px;
   flex-grow: 1;
   line-height: 50px;
+  transition: .8s;
 }
 
 .dn_toptitle>.dn_title {
@@ -49,6 +51,7 @@
   margin-left: 20px;
   font-size: 16px;
   cursor: pointer;
+  transition: .8s;
 }
 
 .dn_toptitle>.dn_title>span {
@@ -63,6 +66,7 @@
 }
 
 .dn_toptitle>.dn_title>i.dn_tmd {
+  display: none;
   font-size: 16px;
   vertical-align: middle;
   margin-left: 16px;
@@ -97,6 +101,8 @@
   cursor: pointer;
   transition: .3s;
   text-align: center;
+  background-color: #353f46;
+
 }
 
 .dn_btngroup_item:hover {
@@ -107,7 +113,8 @@
   font-size: 16px;
   vertical-align: middle;
   color: #fff;
-  line-height: 50px;
+  height: 14px;
+  display: inline-block;
 }
 
 .dn_btngroup_item>span {
@@ -177,19 +184,30 @@
   flex-direction: row;
   flex-wrap: nowrap;
   height: 100%;
-  background-color: #ececec;
 }
 
 .dn_work {
+  display: flex;
   position: relative;
   flex-grow: 1;
-  height: 100;
+  transition: .5s;
+  background-color: #ececec;
+}
+
+.dn_work_content {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  transition: .5s;
+}
+.dn_work_body{
+  position: relative;
+  flex-grow: 1;
   overflow-x: hidden;
   overflow-y: scroll;
-  /* border-right: 1px solid #ececec;
-  border-left: 5px solid #ececec; */
   padding: 5px 1px 5px 5px;
-  /* padding:  */
+  transition: .5s;
+  background-color: #ececec;
 }
 
 .dn_opts {
@@ -199,6 +217,7 @@
   width: 320px;
   background-color: #fff;
   height: 100%;
+  transition: .5s;
 }
 
 .dn_opts_menu {
@@ -359,14 +378,14 @@
 }
 
 .dn_moditm_pc>img {
-  width: 290px;
-  height: 168px;
+  width: 100%;
+  /* height: 168px; */
   transition: .5s;
 }
 
 .dn_moditm_app>img {
-  width: 136px;
-  height: 220px;
+  width: 132px;
+  /* height: 220px; */
   transition: .5s;
 }
 
@@ -454,4 +473,147 @@
   background-color: #23b7e5;
   border-color: #23b7e5;
 }
+.dn_review{
+  height: 100%;
+  width: 100%;
+  min-width: 920px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.6s ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+.dn_review_mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.review-pc{
 
+}
+
+
+/* 预览 */
+
+.dn_app_container .dn_opts{
+   width: 440px;
+  overflow: hidden;
+}
+.dn_app_container .dn_work{
+  background-color: #c1c1c1;
+}
+
+
+.dn_reviewing .dn_opts{
+  width: 0;
+  overflow: hidden;
+}
+
+.dn_reviewing .dn_grid_body{
+  border:0;  
+}
+.dn_reviewing .dn_grid_body.active{
+  border-color: transparent;
+  box-shadow: 0 0 0 transparent;
+}
+
+.dn_reviewing .dn_backbtn{
+  width: 0;
+  overflow: hidden;
+}
+.dn_reviewing .dn_work{
+  background-color: #00000080;
+}
+
+
+.dn_app_container .dn_work_content {
+  position: relative;
+  margin-top: 70px;
+  left: 50%;
+  margin-left: -163px;
+  height: 620px;
+  width: 326px;
+  background-image: url("../phone-4215e3.svg");
+  background-repeat: no-repeat;
+  flex-grow: 0;
+  overflow: hidden;
+}
+.dn_app_container .dn_work_content > .dn_work_body {
+  position: absolute;
+  top: 97px;
+  left: 3px;
+  background-color: #ececec;
+  height: 486px;
+  width: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.dn_work_content > .review-phtitle {
+  position: absolute;
+  top: 57px;
+  left: 3px;
+  white-space: nowrap;
+  color: #fff;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+}
+/* .review-phone > .review-phbody {
+  position: absolute;
+  top: 97px;
+  left: 30px;
+  background-color: #fff;
+  height: 486px;
+  width: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+} */
+
+.dn_app_container .dn_work_content > .review-phtitle {
+  opacity: 1;
+}
+
+.dn_app_container .dn_work_body{
+  padding: 0;
+  /* cursor: pointer; */
+}
+
+.dn_tip{
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  top: 35%;
+  margin-top: -20.5px;
+  font-family: 宋体;
+}
+.dn_tip_title{
+  color: #aaa;
+  font-size: 26px;
+  text-align: center;
+}
+.dn_tip_title>i{
+  font-size: 60px;
+    opacity: 0.55;
+    transform: rotate(8deg);
+}
+.dn_app_container .dn_tip_title{
+  font-size: 16px;
+}
+.dn_app_container .dn_tip_title>i{
+  font-size: 30px;
+}

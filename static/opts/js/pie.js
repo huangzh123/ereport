@@ -820,7 +820,7 @@ let opt = {
   contents: {
     title: {
       show: true,
-      text: "线图",
+      text: "饼图",
       link: "", //超链接
       target: "blank", //指定窗口打开超链接 self\blank
       textStyle: {

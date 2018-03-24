@@ -627,7 +627,7 @@ export default {
       width = w;
       if (setTime) clearTimeout(setTime);
       setTime = setTimeout(() => {
-        self.$options.methods.resizeAll(self);
+        if(self.containerType === 'pc') self.$options.methods.resizeAll(self);
       }, 500);
     };
   },

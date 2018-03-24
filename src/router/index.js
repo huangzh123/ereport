@@ -13,6 +13,7 @@ export default new Router({
   linkActiveClass: 'active',
   routes: [
     { path: '/', redirect: '/mag/my-chart' },
+    
     {
       path: '/design',
       name: 'design',

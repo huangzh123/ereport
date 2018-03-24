@@ -760,7 +760,7 @@ let opt = {
     backgroundColor: "#404a59"
   },
   others: {
-    openMenu: [1, 2, 6, 7],
+    openMenu: [1, 2, 7],
     datasways: 1, //获取方式
     datasource: "", //数据源
     datasql: "select a.natural_village_name,count(b.building_id ) as count from building b left join natural_village a on a.natural_village_id=b.natural_village_id GROUP BY a.natural_village_name", //sql语句

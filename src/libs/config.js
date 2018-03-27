@@ -33,11 +33,11 @@ const CONFIG = (function () {
       editChart: IP + "/rest/report/editReport?appCode="+APP_CODE, //修改报表
       deleteChart: IP + "/rest/report/delReport?appCode="+APP_CODE, //删除报表
       verifReportCode: IP + "/rest/report/verifReportCode?appCode="+APP_CODE, //验证报表编码重复性
-      //报表类型
-      getChartTypes: IP + "/rest/report/reportTypeList?appCode="+APP_CODE, //获取报表类型
-      createChartTypes: IP + "/rest/report/saveReportType?appCode="+APP_CODE, //新增报表类型
-      delReportType: IP + "/rest/report/delReportType?appCode="+APP_CODE, //删除报表类型
-      editReportType: IP + "/rest/report/editReportType?appCode="+APP_CODE, //修改报表类型
+      //报表分类
+      getChartTypes: IP + "/rest/report/reportTypeList?appCode="+APP_CODE, //获取报表分类
+      createChartTypes: IP + "/rest/report/saveReportType?appCode="+APP_CODE, //新增报表分类
+      delReportType: IP + "/rest/report/delReportType?appCode="+APP_CODE, //删除报表分类
+      editReportType: IP + "/rest/report/editReportType?appCode="+APP_CODE, //修改报表分类
       //数据源
       dataSourceList: IP + "/rest/report/dataSourceList?appCode="+APP_CODE, //获取数据源
       connectDataSource: IP + "/rest/report/connectDataSource?appCode="+APP_CODE, //获取数据（执行SQL语句）

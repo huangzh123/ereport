@@ -24,13 +24,17 @@
    {{ scope.row.reportname }}
 </template>
           </el-table-column>
-          <el-table-column align="center" header-align="center" prop="type" label="类型" width="90" show-overflow-tooltip>
+          <el-table-column align="center" header-align="center" prop="type" label="分类" width="90" show-overflow-tooltip>
 <template slot-scope="scope">
    {{ scope.row.typename || '无' }}
 </template>
           </el-table-column>
            <el-table-column align="center" header-align="center" sortable label="编码" width="120">
             <template slot-scope="scope">{{ scope.row.reportcode }}
+</template>
+          </el-table-column>
+          <el-table-column align="center" header-align="center"  label="类型" width="80">
+            <template slot-scope="scope">{{ scope.row.ismobile == '1'?'移动端':'PC端'}}
 </template>
           </el-table-column>
            
@@ -44,10 +48,6 @@
     <a class="zhbtn primary" @click="getToEditer(scope.row.reportid)"><i class="iconfont icon-sheji"></i><span>设计</span></a>
     <a class="zhbtn" @click="showEditForm(scope.row)"><i class="iconfont icon-bianji "></i><span>修改</span></a>
     <a class="zhbtn"@click="showQrcodeModel(scope.row)"><i class="iconfont icon-yulan"></i><span>预览</span></a>
-
-    <!-- <button class="zhibtn" @click="getToEditer(scope.row.reportid)"> <i class="iconfont icon-sheji "></i><span>设计</span></button>
-    <button class="zhibtn" @click="showEditForm(scope.row)"><i class="iconfont icon-bianji"></i><span>修改</span></button>
-    <button class="zhibtn"><i class="iconfont icon-yulan nomargin" @click="showQrcodeModel(scope.row)"></i><span>预览</span></button> -->
 </template>
           </el-table-column>
         </el-table>
@@ -71,10 +71,15 @@
             <el-input  auto-complete="off" placeholder="唯一标识" v-on:change="verifReportCode(form.reportCode,(r) => {illegalCode = !r})" v-model="form.reportCode"></el-input>
             <span class="myc_illegalCode" v-show="illegalCode"><i class="iconfont icon-gantanhao"></i>该编码已存在，请重新输入!</span>
           </el-form-item>
-          
-          <el-form-item label="页面类型">
-            <el-select  placeholder="请选择页面类型"  v-model="form.reportType">
-              <el-option  v-for="(item,index) in types" :key="index" :label="item.typename" :value="item.typecode"></el-option>
+          <el-form-item label="页面分类">
+            <el-select  placeholder="请选择分类"  v-model="form.reportType">
+              <el-option v-for="(item,index) in types" :key="index" :label="item.typename" :value="item.typecode"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="类型">
+            <el-select  placeholder="请选择类型"  v-model="form.isMobile">
+              <el-option  :key="1" label="PC端" :value="0"></el-option>
+              <el-option  :key="2" label="移动端" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -91,9 +96,15 @@
           <el-form-item label="编码/Key">
             <el-input  auto-complete="off" disabled placeholder="唯一标识" v-model="form_edit.reportCode"></el-input>
           </el-form-item>
-          <el-form-item label="页面类型">
-            <el-select  placeholder="请选择页面类型"  v-model="form_edit.reportType">
+          <el-form-item label="页面分类">
+            <el-select  placeholder="请选择分类"  v-model="form_edit.reportType">
               <el-option  v-for="(item,index) in types" :key="index" :label="item.typename" :value="item.typecode"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="类型">
+            <el-select  placeholder="请选择类型"  v-model="form_edit.isMobile">
+              <el-option  :key="1" label="PC端" :value="0"></el-option>
+              <el-option  :key="2" label="移动端" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -147,19 +158,21 @@ export default {
       apps: [],
       loading: true,
       form: {
-        reportType: "", //报表类型
+        reportType: "", //报表分类
         reportName: "", //报表名称
         reportCode: "", //编码
         dataJson: "", //JSON
         reportid: "", //页面ID
         isDrillDown: "", //是否钻取页
-        drillDownModule: "" //钻取模块ID
+        drillDownModule: "", //钻取模块ID
+        isMobile:0
       },
       form_edit: {
-        reportType: "", //报表类型
+        reportType: "", //报表分类
         reportName: "", //报表名称
         reportCode: "", //编码
         reportId:"",
+        isMobile:0
       },
       icon_img: "",
       upload_status: "",
@@ -193,19 +206,19 @@ export default {
     //保存/新增页面
     save(id) {
       let self = this;
-      if(self.illegalCode) return;
       let url =  self.CONFIG.REST.saveChart;
       self.form["reportId"] = this.$tool.getUuid();
       function judgeNull(param) {
         if (param === null || param === undefined || param.trim() === "")
           return true;
       }
+      if(self.illegalCode) return self.$tool.dialog("编码已存在，请重新输入", "warning");;
       if (judgeNull(self.form.reportName))
         return self.$tool.dialog("请输入页面名称", "warning");
       if (judgeNull(self.form.reportCode))
         return self.$tool.dialog("请输入编码/key", "warning");
       if (judgeNull(self.form.reportType))
-        return self.$tool.dialog("请选择所属类型", "warning");
+        return self.$tool.dialog("请选择分类", "warning");
       self.$api.post(url, self.form).then(data => {
         if (data.status === "ok") {
           self.$tool.dialog("保存成功", "success");
@@ -229,7 +242,7 @@ export default {
       if (judgeNull(self.form_edit.reportCode))
         return self.$tool.dialog("请输入编码/key", "warning");
       if (judgeNull(self.form_edit.reportType))
-        return self.$tool.dialog("请选择所属类型", "warning");
+        return self.$tool.dialog("请选择分类", "warning");
       self.$api.post(url, self.form_edit).then(data => {
         if (data.status === "ok") {
           self.$tool.dialog("修改成功", "success");
@@ -264,6 +277,7 @@ export default {
     //打开新增模态框
     showCreateForm() {
       let self = this;
+      self.illegalCode = false;
       Object.assign(this.$data.form, this.$options.data().form);
       this.upload_status = "";
       this.code_fun = "";
@@ -273,11 +287,13 @@ export default {
     //打开编辑模态框
     showEditForm(item) {
       let self = this;
+      self.illegalCode = false;
       Object.assign(this.$data.form, this.$options.data().form);
       self.form_edit.reportType = item.typecode;
       self.form_edit.reportName = item.reportname;
       self.form_edit.reportCode = item.reportcode;
       self.form_edit.reportId = item.reportid;
+      self.form_edit.isMobile = item.ismobile == '1' ? 1 : 0;
       self.dialog_form_edit = true;
       console.log(self.form_edit)
       // this.$options.methods.getChartDetail(this, id, data => {

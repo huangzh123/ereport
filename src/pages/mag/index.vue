@@ -56,7 +56,7 @@ export default {
                   name:"我的页面",
                   path:"/mag/my-chart"
                 },{
-                  name:"页面类型",
+                  name:"页面分类",
                   path:"/mag/chart-type"
                 }
               ]

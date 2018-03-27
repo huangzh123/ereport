@@ -6,7 +6,7 @@
                 <span class="dn_title"><i class="iconfont dn_ticn icon-icon"></i><span>{{title}}</span><i class="iconfont dn_tmd icon-xiugai"></i></span>
             </div>
             <div class="dn_btngroup">
-                <div class="dn_btngroup_item" @click="review(null)" v-show="showReviewModel">
+                <div class="dn_btngroup_item" @click="reviewResult(null)" v-show="showReviewModel">
                     <i class="iconfont dn_ticn icon-bukejian"></i><span>取消预览</span>
                 </div>
                 <div class="dn_btngroup_item" @click="designModel = 'pc'" v-show=" designModel === 'app' && !showReviewModel">
@@ -19,8 +19,8 @@
                     <i class="iconfont dn_ticn icon-review"></i><span>预览</span><i class="iconfont dn_down icon-xiala1"></i>
                     <div class="dn_mod">
                         <ul>
-                            <li @click="review('pc')"><i class="iconfont dn_ticn icon-PC "></i><span>PC端预览</span></li>
-                            <li @click="review('app')"><i class="iconfont dn_ticn icon-shouji1"></i><span>手机端预览</span></li>
+                            <li @click="reviewResult('pc')"><i class="iconfont dn_ticn icon-PC "></i><span>PC端预览</span></li>
+                            <li @click="reviewResult('app')"><i class="iconfont dn_ticn icon-shouji1"></i><span>手机端预览</span></li>
                         </ul>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
             <div id="dn_work" class="dn_work">
                 <div class="dn_work_content" >
                     <div class="review-phtitle">{{title}}</div>
-                    <div class="dn_work_body" v-loading='loading_total'  element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
+                    <div class="dn_work_body" :style="{backgroundColor:backgroundColor}" v-loading='loading_total'  element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
                          <div class="dn_tip" v-show="temps.length<=0 && !showReviewModel">
                                 <h1 class="dn_tip_title">请“双击”右侧数据图表，开始吧！<i class="iconfont icon-emizhifeiji"></i></h1>
                         </div>
-                        <div class="grid-stack" id="phone_design">
+                        <div class="grid-stack" id="phone_design" element-loading-text="拼命加载中" element-loading-background="rgba(0, 0, 0, 0.8)">
                            
                         </div>
                     </div>   
@@ -79,8 +79,8 @@
                 <!-- 常规配置 -->
                 <div class="dn_opts_cont" v-show="menuIndex === 1">
                     <inputText style="margin-top:15px" title="页面标题" placeholder="请输入页面标题" :value="title" remark="" v-on:updateValue="(v)=>{title = v}"></inputText>
-                    <webInputColor style="margin-top:15px" :setting="{title:'背景颜色'}"></webInputColor>
-                    <inputText style="margin-top:15px" title="页面描述" placeholder="请输入页面描述" :value="title" remark="" v-on:updateValue="(v)=>{title = v}"></inputText>
+                    <inputColor style="margin-top:15px" title="背景颜色"  :value="backgroundColor" remark="" v-on:updateValue="(v)=>{backgroundColor = v}"></inputColor>
+                    <!-- <webInputColor style="margin-top:15px" :setting="{title:'背景颜色'}"></webInputColor> -->
                 </div>
                 <!-- 图表配置-仪表板 -->
                 <div class="dn_opts_cont" v-show="menuIndex === 2 && menuIndex_child === 1">
@@ -133,7 +133,7 @@
                         </template>
                     </el-collapse>
                     <div class="dn_daset_btn dn_daset_rfbtn">
-                        <el-button type="primary" size="medium" @click="refresh"><i class="iconfont dn_ticn icon-shuaxin"></i>更新图表</el-button>
+                        <!-- <el-button type="primary" size="medium" @click="refresh"><i class="iconfont dn_ticn icon-shuaxin"></i>更新图表</el-button> -->
                     </div>
                 </div>
                 <!-- 模板 -->
@@ -208,11 +208,14 @@ import webInputSlider from "../components/web/inputSlider.vue";
 import webInputConfirm from "../components/web/inputConfirm.vue";
 // others
 import inputText from "../components/others/inputText.vue";
+import inputColor from "../components/others/inputColor.vue";
 export default {
   data() {
     return {
       //页面标题
       title: "",
+      //背景颜色
+      backgroundColor:'#ececec',
       //请求后台接口的源数据
       source: null,
       //缓存GRID插件数组
@@ -223,7 +226,8 @@ export default {
       menuIndex: 2,
       //图表设置子菜单的选中项
       menuIndex_child: 1,
-      radio_source: "1", //数据源的获取方式
+      //数据源的获取方式
+      radio_source: "1", 
       radio5: "我的模板",
       //0：pc 1：app
       containerType: "pc",
@@ -374,6 +378,7 @@ export default {
         containerID = containerID || "phone_design";
         let gridstack = $("#" + containerID).data("gridstack");
         gridstack.removeAll();
+        let j = 0;
         for (let i = 0; i < conf.length; i++) {
           let temp = conf[i];
           let _t = self.$tool.copy_echarts(_opts[temp.name || "line"], true);
@@ -384,11 +389,14 @@ export default {
             temp,
             containerID,
             myChart => {
-              myChart.resize();
+                if(j>=conf.length -1)
+                self.$options.methods.resizeAll(self);
+                j++;
             },
             false
           );
         }
+        self.currentIndex = 0;
         t = conf.length * 100;
       }
       setTimeout(() => {
@@ -490,25 +498,32 @@ export default {
       });
     },
     //预览
-    review(type) {
+    reviewResult(type) {
       let self = this;
       self.showReviewModel = type;
       let gridstack = $("#phone_design").data("gridstack");
       if (type) {
+        this.containerType = type;
         gridstack.disable();
       } else {
         this.containerType = this.designModel;
         gridstack.enable();
       }
-      if (type) this.containerType = type;
     },
     //保存
     save() {
       const self = this;
+      let conf = {
+          backgroundColor:self.backgroundColor
+      }
       let result = {
         dataJson: [],
-        reportId: self.$route.query.reportId
+        reportId: self.$route.query.reportId,
+        isMobile : self.designModel == 'app'?'1':'0',
+        reportName : self.title,
+        reportConfig:JSON.stringify(conf),
       };
+
       let length = $("#phone_design > .grid-stack-item:visible").length;
       result.dataJson = [];
       _.map($("#phone_design > .grid-stack-item:visible"), function(el) {
@@ -547,6 +562,15 @@ export default {
         if (data.status === "ok") {
           self.source = data.data[0];
           self.title = data.data[0].reportname;
+          let param = data.data[0].reportconfig;
+          try{
+              param = JSON.parse(param);
+          }catch(e){
+              param = {};
+          }
+          param = param || {};
+          self.backgroundColor = param.backgroundColor || '#ececec';
+          self.designModel = data.data[0].ismobile == '1'?'app':'pc';
           let conf = data.data[0].datajson;
           if (typeof conf === "string") conf = JSON.parse(conf);
           self.$options.methods.renderChartsByConfig(self, conf, cb);
@@ -583,13 +607,17 @@ export default {
       } else {
         myChart.hideLoading();
       }
-    }
+    },
   },
   watch: {
-    containerType(value) {
+      //设计模式
+    containerType(value,old) {
       this.$options.methods.resizeAll(this);
     },
+    //预览模式
     showReviewModel(value, old) {
+        let self = this;
+        if(this.containerType === 'app' && (value === null || value === 'app')) return;
       this.$options.methods.resizeAll(this);
     },
     designModel(val) {
@@ -603,6 +631,8 @@ export default {
       // float: true,
       verticalMargin: 0,
       cellHeight: 40,
+      minWidth:326,
+      disableOneColumnMode:true,
       // animate: true,
       rtl: true,
       placeholderClass: "dn_stack_placeholder"
@@ -645,7 +675,8 @@ export default {
     webOptions,
     webInputSlider,
     webInputConfirm,
-    inputText
+    inputText,
+    inputColor,
   }
 };
 </script>

@@ -2,10 +2,10 @@
   <div id="form-type">
     <div class="top-bar">
       <div class="title">
-        <h1 class="web-font">页面类型<i class="iconfont icon-wenhao"></i></h1>
+        <h1 class="web-font">页面分类<i class="iconfont icon-wenhao"></i></h1>
       </div>
       <div class="menu">
-        <a class="zhbtn" @click="showCreateForm"><i class="iconfont icon-add1"></i>新增类型</a>
+        <a class="zhbtn" @click="showCreateForm"><i class="iconfont icon-add1"></i>新增分类</a>
         <!--<a class="zhbtn primary">删除</a>-->
       </div>
     </div>
@@ -37,7 +37,7 @@
           </div> -->
       </div>
     </div>
-        <el-dialog title="新建类型"  :visible.sync="dialog_form" >
+        <el-dialog title="新建分类"  :visible.sync="dialog_form" >
         <el-form label-position="left" label-width="80px">
           <el-form-item label="名称" >
             <el-input  auto-complete="off" v-model="form.typeName"></el-input>
@@ -51,7 +51,7 @@
           <el-button type="primary" @click="save">确 定</el-button>
         </div>
       </el-dialog>
-      <el-dialog title="修改类型"  :visible.sync="dialog_form_edit" >
+      <el-dialog title="修改分类"  :visible.sync="dialog_form_edit" >
         <el-form label-position="left" label-width="80px">
           <el-form-item label="名称" >
             <el-input  auto-complete="off" v-model="form_edit.typeName"></el-input>
@@ -121,7 +121,7 @@ export default {
     };
   },
   methods: {
-    //保存、新增类型
+    //保存、新增分类
     save() {
       let self = this;
       if (self.form.typeCode.trim() === "")
@@ -138,7 +138,7 @@ export default {
           }
         });
     },
-    //修改、编辑类型
+    //修改、编辑分类
     edit() {
       let self = this;
       if (self.form_edit.typeCode.trim() === "")

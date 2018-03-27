@@ -29,10 +29,34 @@ export default {
       }
     };
   },
-  mounted() {},
+  mounted() {
+    let self = this;
+    if(self.setting.init){
+      let opt = {
+            self,
+            setting: self.setting,
+            others: self.others,
+            contents: self.contents
+          }
+      self.setting.init(opt,() => {
+        
+      })
+    }else{
+
+    }
+  },
   methods: {
     updateValue(value) {
       if(this.setting.reformat) value = this.setting.reformat(value);
+      let opt = {
+            self,
+            setting: self.setting,
+            others: self.others,
+            contents: self.contents,
+            cid:self.cid
+          }
+      if(this.setting.updateValue) return this.setting.updateValue(opt);
+      
       this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
     }
   }

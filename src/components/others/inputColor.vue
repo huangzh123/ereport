@@ -1,11 +1,11 @@
 <template>
-  <div class="wbipt_text_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
+  <div class="wbipt_text_ctn">
     <div class="wbipt_text_left">
-      <span>{{setting.title}}</span>
+      <span>{{title}}</span>
     </div>
     <div class="wbipt_text_right">
-      <el-color-picker :show-alpha="true" v-model="color" v-on:change="updateValue"></el-color-picker>
-       <p v-show="setting.remark">{{setting.remark}}</p>
+      <el-color-picker :show-alpha="true" :value="value" v-on:change="updateValue"></el-color-picker>
+       <p v-show="remark">{{remark}}</p>
     </div>
   </div>
   
@@ -13,26 +13,15 @@
 
 <script>
 export default {
-  props: ["setting", "cid", "contents", "others"],
+  props: ["title", "value", "remark"],
   data() {
     return {
-       returnVal: (contents, others,str) => {
-        return eval(str);
-      },
-      color:'#fff'
+
     };
-  },
-   mounted(){
-    this.color =  this.returnVal(this.contents,this.others, this.setting.model)
   },
   methods: {
     updateValue(value) {
-      this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
-    }
-  },
-    watch: {
-    cid(val){
-      this.color =  this.returnVal(this.contents,this.others, this.setting.model)
+      this.$emit("updateValue", value); //自定义事件，并传参
     }
   }
 };

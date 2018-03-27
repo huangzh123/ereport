@@ -1,6 +1,6 @@
 <template>
-  <div class="dn_daset_btn dn_daset_cnbtn" v-show="!setting.isShow || setting.isShow({others:this.others})">
-    <el-button @click="click" type="primary" size="medium" plain><i class="iconfont dn_ticn icon-msnui-cloud-download"></i>{{setting.title}}</el-button>
+  <div class="dn_daset_btn dn_daset_cnbtn" :class="[setting.btnclass]" v-show="!setting.isShow || setting.isShow({others:this.others})">
+    <el-button @click="click" type="primary"  size="medium" plain><i class="iconfont dn_ticn" :class="[setting.icon]"></i>{{setting.title}}</el-button>
   </div>
 </template>
 
@@ -39,7 +39,8 @@
           self:this,
           setting:this.setting,
           others:this.others,
-          contents:this.contents
+          contents:this.contents,
+          cid:this.cid
         }
         this.setting.click(opt);
       }

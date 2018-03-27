@@ -5,6 +5,7 @@
 require('es6-promise').polyfill();
 import axios from 'axios'
 import qs from 'qs'
+import { Message } from 'element-ui';
 
 
 const api = function (Vue) {
@@ -48,6 +49,11 @@ const api = function (Vue) {
     // console.log(error.config);
     if(Vue.prototype.CONFIG.DEBUG) console.error(error)
     // Vue.prototype.$tool.gotoLoginpage();
+    Message({
+      showClose: true,
+      message: '请求服务时发生错误了！',
+      type: 'error'
+    });
     return Promise.reject(error);
   }
 

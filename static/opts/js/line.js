@@ -129,7 +129,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval('contents.title.link');
+            return contents.title.link;
           },
           model: "contents.title.target", //绑定的字段
           component: 'webInputRadio', //使用的web组件
@@ -413,7 +413,7 @@ let opt = {
           title: '文本角度',
           describe: '',
           remark: '',
-          isShow(){
+          isShow() {
             return false;
           },
           max: 180,
@@ -636,18 +636,18 @@ let opt = {
           component: 'webSelect',
           options: [{
               label: '无',
-              value: eval("['none','none']"),
+              value: ['none', 'none'],
             }, {
               label: '右边箭头',
-              value: eval("['none','arrow']"),
+              value: ['none', 'arrow'],
             },
             {
               label: '左边箭头',
-              value: eval("['arrow','none']"),
+              value: ['arrow', 'none'],
             },
             {
               label: '双边箭头',
-              value: eval("['arrow','arrow']"),
+              value: ['arrow', 'arrow'],
             },
 
           ]
@@ -942,18 +942,18 @@ let opt = {
           component: 'webSelect',
           options: [{
               label: '无',
-              value: eval("['none','none']"),
+              value: ['none', 'none'],
             }, {
               label: '上边箭头',
-              value: eval("['none','arrow']"),
+              value: ['none', 'arrow'],
             },
             {
               label: '下边箭头',
-              value: eval("['arrow','none']"),
+              value: ['arrow', 'none'],
             },
             {
               label: '双边箭头',
-              value: eval("['arrow','arrow']"),
+              value: ['arrow', 'arrow'],
             },
 
           ]
@@ -1114,7 +1114,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type !== 'shadow'");
+            return contents.tooltip.axisPointer.type !== 'shadow';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.lineStyle.color",
@@ -1126,7 +1126,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type !== 'shadow'");
+            return contents.tooltip.axisPointer.type !== 'shadow';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.lineStyle.width",
@@ -1138,7 +1138,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type !== 'shadow'");
+            return contents.tooltip.axisPointer.type !== 'shadow';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.lineStyle.type",
@@ -1162,7 +1162,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type === 'shadow'");
+            return contents.tooltip.axisPointer.type === 'shadow';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.shadowStyle.color",
@@ -1174,7 +1174,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type === 'cross'");
+            return contents.tooltip.axisPointer.type === 'cross';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.crossStyle.color",
@@ -1186,7 +1186,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type === 'cross'");
+            return contents.tooltip.axisPointer.type === 'cross';
           },
           remark: '',
           model: "contents.tooltip.axisPointer.crossStyle.width",
@@ -1198,7 +1198,7 @@ let opt = {
           isShow(opts) {
             let self = opts.self || this;
             let contents = opts.contents;
-            return eval("contents.tooltip.axisPointer.type === 'cross'");
+            return contents.tooltip.axisPointer.type === 'cross'
           },
           remark: '',
           model: "contents.tooltip.axisPointer.crossStyle.type",
@@ -1474,7 +1474,7 @@ let opt = {
           remark: '',
           isShow(opt) {
             let others = opt.others;
-            return eval('others.datasways === 2')
+            return others.datasways === 2
           },
           model: "others.datasurl",
           component: 'webInputText',
@@ -1486,14 +1486,24 @@ let opt = {
           remark: '',
           isShow(opt) {
             let others = opt.others;
-            return eval('others.datasways === 3')
+            return others.datasways === 3
           },
           init(opt, cb) {
             let self = opt.self;
             let setting = opt.setting;
-            let _js = "self.$api.get(self.CONFIG.REST.dataSourceList).then(data => {if (data.status === 'ok') {let arr = [];for (let i = 0; i < data.data.length; i++) {let o = {label: data.data[i]['dsname'],value: data.data[i]['dsid']};arr.push(o);}setting.options = arr;}});"
-            eval(_js);
-
+            self.$api.get(self.CONFIG.REST.dataSourceList).then(data => {
+              if (data.status === 'ok') {
+                let arr = [];
+                for (let i = 0; i < data.data.length; i++) {
+                  let o = {
+                    label: data.data[i]['dsname'],
+                    value: data.data[i]['dsid']
+                  };
+                  arr.push(o);
+                }
+                setting.options = arr;
+              }
+            });
             if (cb) cb();
           },
           model: "others.datasource",
@@ -1507,7 +1517,7 @@ let opt = {
           remark: '',
           isShow(opt) {
             let others = opt.others;
-            return eval('others.datasways === 3')
+            return others.datasways === 3
           },
           model: "others.datasql",
           component: 'webInputTextarea',
@@ -1516,30 +1526,55 @@ let opt = {
         {
           title: '请求JSON数据',
           describe: '',
+          icon: 'icon-msnui-cloud-download',
           remark: '',
           isShow(opt) {
             let others = opt.others;
-            return eval('others.datasways === 3')
+            return others.datasways === 3;
           },
           click(opt, cb) {
             let self = opt.self;
             let setting = opt.setting;
             let contents = opt.contents;
             let others = opt.others;
-            let _js = "self.$api.post(self.CONFIG.REST.connectDataSource,{chartType:'0301',dsId:others.datasource,dataMode:0,dataExpr:others.datasql}).then(data => {if (data.status === 'ok') {contents.dataset.source = data.data;contents.dataset.source = data.data;others.updated++;}});"
-            eval(_js);
+            self.$api.post(self.CONFIG.REST.connectDataSource, {
+              chartType: '0301',
+              dsId: others.datasource,
+              dataMode: 0,
+              dataExpr: others.datasql
+            }).then(data => {
+              if (data.status === 'ok') {
+                others.datajson = data.data;
+              }
+            });
             if (cb) cb();
           },
           component: 'webInputConfirm',
           options: []
         },
         {
-          title: '请求结果',
+          title: '数据/结果',
           describe: '请求后的JSON数据',
           rows: 14,
           remark: '',
-          format(val) {
+          init(opt, cb) {
+            let self = opt.self;
+            let setting = opt.setting;
+            let others = opt.others;
+            let contents = opt.contents;
             let str = '';
+            let val = contents.dataset.source;
+            if (typeof val === 'object')
+              try {
+                str = JSON.stringify(val, null, ' ')
+              } catch (e) {
+                str = val;
+              }
+            others.datajson = str;
+            if (cb) cb();
+          },
+          format(val) {
+            let str = val;
             if (typeof val === 'object')
               try {
                 str = JSON.stringify(val, null, ' ')
@@ -1548,19 +1583,37 @@ let opt = {
               }
             return str;
           },
-          reformat(val) {
-            let str = [];
-            if (typeof val === 'string')
-              try {
-                str = JSON.parse(val)
-              } catch (e) {
-                // str = val;
-              }
-            return str;
-          },
           disabled: true,
-          model: "contents.dataset.source",
+          model: "others.datajson",
           component: 'webInputTextarea',
+        },
+        {
+          title: ' 更新数据',
+          describe: '',
+          btnclass: 'dn_daset_rfbtn',
+          icon: 'icon-shuaxin1',
+          remark: '',
+          click(opt, cb) {
+            let self = opt.self;
+            let setting = opt.setting;
+            let contents = opt.contents;
+            let others = opt.others;
+            let cid = opt.cid;
+            let json = others.datajson;
+            if (typeof others.datajson === 'string')
+              try {
+                json = JSON.parse(others.datajson)
+              } catch (e) {
+                json = [];
+              }
+            console.log(others.datajson, json)
+            contents.dataset.source = json;
+            self.$emit("updateValue", contents.dataset.source, "contents.dataset.source", cid);
+            others.updated++;
+            if (cb) cb();
+          },
+          component: 'webInputConfirm',
+          options: []
         },
       ]
     },
@@ -1576,8 +1629,24 @@ let opt = {
             let setting = opt.setting;
             let others = opt.others;
             let contents = opt.contents;
-            let _js = "let arr = [];let d = contents.dataset.source;if(d && d !== ''){let type = self.$tool.getType(d);if(type === 'string') d = JSON.parse(d);type = self.$tool.getType(d);if(type === 'array' && d.length > 0) for (let k in d[0]) arr.push({label: k,value: k});}setting.options = arr;if(cb) cb();"
-            eval(_js)
+            let arr = [];
+            let d = contents.dataset.source;
+            if (d && d !== '') {
+              let type = self.$tool.getType(d);
+              if (type === 'string') d = JSON.parse(d);
+              type = self.$tool.getType(d);
+              if (type === 'array' && d.length > 0)
+                for (let k in d[0]){
+                  arr.push({
+                    label: k,
+                    value: k
+                  });
+                  if(typeof d[0][k] === 'string'){
+                    // contents.series[0].encode.x = k;
+                  }
+                }
+            }
+            setting.options = arr;
             if (cb) cb();
           },
           model: "contents.series[0].encode.x",
@@ -1593,8 +1662,25 @@ let opt = {
             let setting = opt.setting;
             let others = opt.others;
             let contents = opt.contents;
-            let _js = "let arr = [];let d = contents.dataset.source;if(d && d !== ''){let type = self.$tool.getType(d);if(type === 'string') d = JSON.parse(d);type = self.$tool.getType(d);if(type === 'array' && d.length > 0) for (let k in d[0]) arr.push({label: k,value: k});}setting.options = arr;if(cb) cb();"
-            eval(_js)
+            let arr = [];
+            let d = contents.dataset.source;
+            if (d && d !== '') {
+              let type = self.$tool.getType(d);
+              if (type === 'string') d = JSON.parse(d);
+              type = self.$tool.getType(d);
+              if (type === 'array' && d.length > 0)
+                for (let k in d[0]){
+                  arr.push({
+                    label: k,
+                    value: k
+                  });
+                  let x = '';
+                  if(typeof d[0][k] === 'number'){
+                    // contents.series[0].encode.y = k;
+                  }
+                }
+            }
+            setting.options = arr;
             if (cb) cb();
           },
           model: "contents.series[0].encode.y",

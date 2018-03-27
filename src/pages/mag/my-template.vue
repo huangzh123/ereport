@@ -30,7 +30,7 @@
           <el-table-column align="center" header-align="center" sortable label="日期" min-width="85" show-overflow-tooltip>
             <template slot-scope="scope">{{ $tool.Format(scope.row.createTime,'yyyy-MM-dd') }}</template>
           </el-table-column>
-          <el-table-column align="center" header-align="center" prop="type" label="类型"  show-overflow-tooltip>
+          <el-table-column align="center" header-align="center" prop="type" label="分类"  show-overflow-tooltip>
             <template slot-scope="scope">{{ scope.row.catename || '无' }}</template>
           </el-table-column>
           <el-table-column align="center" header-align="center" label="操作" min-width="120">

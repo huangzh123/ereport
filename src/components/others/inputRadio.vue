@@ -1,45 +1,35 @@
 <template>
-  <div class="dn_dasetrdo_ctn" v-show="!setting.isShow || setting.isShow({others:this.others,contents:this.contents})">
+  <div class="dn_dasetrdo_ctn" >
     <div class="dn_dasetrdo_left">
-      <span>{{setting.title}}</span>
+      <span>{{title}}</span>
     </div>
     <div class="dn_dasetrdo_right">
       <el-radio 
-      v-if="setting.model"
-      v-for="(item,i) in setting.options"
+      v-for="(item,i) in options"
        :key="i" 
-       v-model="radio" 
-       v-on:change="updateValue"
+       v-model = "val"
        :label="item.value">
        {{item.label}}
        </el-radio>
-      <p v-show="setting.remark">{{setting.remark}}</p>
+      <p v-show="remark">{{remark}}</p>
     </div>
   </div> 
 </template>
 
 <script>
 export default {
-  props: ["setting", "contents",'cid', "others"],
+  props: ["title", "value", "options", "remark"],
   data() {
     return {
-      radio: 1,
-      returnVal: (contents,others,str) => {
-        return eval(str);
-      }
+      val: "",
     };
   },
-  mounted(){
-    this.radio =  this.returnVal( this.contents,this.others, this.setting.model)
-  },
-  methods: {
-    updateValue(value) {
-      this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
-    }
+  mounted() {
+    this.val = this.value;
   },
   watch: {
-    cid(val){
-      this.radio =  this.returnVal( this.contents,this.others, this.setting.model)
+    val(v, old) {
+      this.$emit("updateValue", v);
     }
   }
 };
@@ -54,7 +44,7 @@ export default {
   margin: 5px 0 15px;
 }
 .dn_dasetrdo_left {
-   width: 21%;
+  width: 21%;
   min-width: 70px;
   flex-grow: 0;
   padding-right: 5px;

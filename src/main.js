@@ -17,6 +17,19 @@ Vue.use(HTTP)
 Vue.use(CONFIG)
 Vue.use(TOOL)
 
+router.beforeEach((to,from,next) => {
+  if(to.name === 'login'){
+    Vue.prototype.$tool.deleteCookie('LOCAL_SERVER_D01_tgc');
+    return next();
+  } 
+  let userInfo = Vue.prototype.$tool.getCookie('LOCAL_SERVER_D01_tgc');
+    if(userInfo != 'd6460c44a311d002e18231d630aec'){
+      next('/login');
+    }else{
+      next();
+    }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -14,7 +14,7 @@
         <div class="menus">
           <a class="zhbtn" @click="deleteItems"><i class="iconfont icon-lajixiang"></i>删除所选</a>
           <div class="search">
-            <el-input placeholder="请输入检索关键字" @change="keywordchange" v-model="keyword" icon="search"></el-input>
+            <el-input clearable placeholder="请输入检索关键字" @change="keywordchange" v-model="keyword" icon="search"></el-input>
           </div>
         </div>
         <el-table ref="multipleTable" :data="rows" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
@@ -33,21 +33,21 @@
             <template slot-scope="scope">{{ scope.row.reportcode }}
 </template>
           </el-table-column>
-          <el-table-column align="center" header-align="center"  label="类型" width="80">
+          <!-- <el-table-column align="center" header-align="center"  label="模式" width="80">
             <template slot-scope="scope">{{ scope.row.ismobile == '1'?'移动端':'PC端'}}
 </template>
-          </el-table-column>
-           
+          </el-table-column> -->
           <el-table-column class="myc_tb_date" align="center" header-align="center" sortable label="修改日期" width="115" show-overflow-tooltip>
 <template slot-scope="scope">
    {{ $tool.Format(scope.row.createtime,'yyyy-MM-dd') }}
 </template>
           </el-table-column>
-          <el-table-column align="center" header-align="center" label="操作" width="250">
+          <el-table-column align="center" header-align="center" label="操作" width="350">
 <template slot-scope="scope">
     <a class="zhbtn primary" @click="getToEditer(scope.row.reportid)"><i class="iconfont icon-sheji"></i><span>设计</span></a>
     <a class="zhbtn" @click="showEditForm(scope.row)"><i class="iconfont icon-bianji "></i><span>修改</span></a>
-    <a class="zhbtn"@click="showQrcodeModel(scope.row)"><i class="iconfont icon-yulan"></i><span>预览</span></a>
+    <a class="zhbtn"@click="visitWeb(scope.row.reportid)"><i class="iconfont icon-yulan"></i><span>预览</span></a>
+    <a class="zhbtn"@click="showModelForm(scope.row.reportid)"><i class="iconfont icon-baocunbingxiayibu"></i><span>另存模板</span></a>
 </template>
           </el-table-column>
         </el-table>
@@ -65,10 +65,10 @@
     <el-dialog  title="新建页面" size="small"  :visible.sync="dialog_form">
         <el-form label-position="left" label-width="80px">
           <el-form-item label="页面名称">
-            <el-input  auto-complete="off" placeholder="中文,10个字符内" v-model="form.reportName"></el-input>
+            <el-input clearable auto-complete="off" placeholder="中文,10个字符内" v-model="form.reportName"></el-input>
           </el-form-item>
           <el-form-item label="编码/Key">
-            <el-input  auto-complete="off" placeholder="唯一标识" v-on:change="verifReportCode(form.reportCode,(r) => {illegalCode = !r})" v-model="form.reportCode"></el-input>
+            <el-input clearable auto-complete="off" placeholder="唯一标识,确定后不能更改" v-on:change="verifReportCode(form.reportCode,(r) => {illegalCode = !r})" v-model="form.reportCode"></el-input>
             <span class="myc_illegalCode" v-show="illegalCode"><i class="iconfont icon-gantanhao"></i>该编码已存在，请重新输入!</span>
           </el-form-item>
           <el-form-item label="页面分类">
@@ -76,10 +76,10 @@
               <el-option v-for="(item,index) in types" :key="index" :label="item.typename" :value="item.typecode"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="类型">
-            <el-select  placeholder="请选择类型"  v-model="form.isMobile">
-              <el-option  :key="1" label="PC端" :value="0"></el-option>
-              <el-option  :key="2" label="移动端" :value="1"></el-option>
+          <el-form-item label="页面模式">
+            <el-select  placeholder="请选择模式"  v-model="form.isMobile">
+              <el-option  :key="1" label="全屏模式" :value="0"></el-option>
+              <el-option  :key="2" label="滚动模式" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -91,7 +91,7 @@
       <el-dialog  title="编辑页面信息" size="small"  :visible.sync="dialog_form_edit">
         <el-form label-position="left" label-width="80px">
           <el-form-item label="页面名称">
-            <el-input  auto-complete="off" placeholder="中文,10个字符内" v-model="form_edit.reportName"></el-input>
+            <el-input clearable auto-complete="off" placeholder="中文,10个字符内" v-model="form_edit.reportName"></el-input>
           </el-form-item>
           <el-form-item label="编码/Key">
             <el-input  auto-complete="off" disabled placeholder="唯一标识" v-model="form_edit.reportCode"></el-input>
@@ -101,16 +101,36 @@
               <el-option  v-for="(item,index) in types" :key="index" :label="item.typename" :value="item.typecode"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="类型">
-            <el-select  placeholder="请选择类型"  v-model="form_edit.isMobile">
-              <el-option  :key="1" label="PC端" :value="0"></el-option>
-              <el-option  :key="2" label="移动端" :value="1"></el-option>
+          <el-form-item label="页面模式">
+            <el-select  placeholder="请选择模式"  v-model="form_edit.isMobile">
+              <el-option  :key="1" label="全屏模式" :value="0"></el-option>
+              <el-option  :key="2" label="滚动模式" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialog_form_edit = false">取 消</el-button>
           <el-button type="primary" @click="edit">确 定</el-button>
+        </div>
+      </el-dialog>
+            <el-dialog  title="另存为模板" size="small"  :visible.sync="dialog_form_model">
+        <el-form label-position="left" label-width="80px">
+          <el-form-item label="模板名称">
+            <el-input clearable auto-complete="off" placeholder="中文,10个字符内" v-model="form_model.reportName"></el-input>
+          </el-form-item>
+          <el-form-item label="编码/Key">
+            <el-input clearable auto-complete="off" placeholder="唯一标识,确定后不能更改" v-model="form_model.reportCode"></el-input>
+          </el-form-item>
+          <el-form-item label="页面模式">
+            <el-select  placeholder="请选择模式"  v-model="form_model.isMobile">
+              <el-option  :key="1" label="全屏模式" :value="0"></el-option>
+              <el-option  :key="2" label="滚动模式" :value="1"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialog_form_model = false">取 消</el-button>
+          <el-button type="primary" @click="saveModel">确 定</el-button>
         </div>
       </el-dialog>
       <el-dialog class="qrcode" :title="qrcode.title" :visible.sync="dialog_qrcode" size="tiny">
@@ -149,9 +169,10 @@ export default {
       rows: [],
       keyword: "",
       dialog_form: false,
-      dialog_form_edit:false,
+      dialog_form_edit: false,
+      dialog_form_model: false,
       //非法code /重复
-      illegalCode:false,
+      illegalCode: false,
       types: [],
       code_fun: "",
       model: "",
@@ -162,17 +183,29 @@ export default {
         reportName: "", //报表名称
         reportCode: "", //编码
         dataJson: "", //JSON
-        reportid: "", //页面ID
+        reportId: "", //页面ID
         isDrillDown: "", //是否钻取页
         drillDownModule: "", //钻取模块ID
-        isMobile:0
+        isMobile: 0,
+        isTemp: 0
       },
       form_edit: {
         reportType: "", //报表分类
         reportName: "", //报表名称
         reportCode: "", //编码
-        reportId:"",
-        isMobile:0
+        reportId: "",
+        isMobile: 0,
+        isTemp: 0
+      },
+      form_model: {
+        reportType: "", //报表分类
+        reportName: "", //报表名称
+        reportCode: "", //编码
+        reportId: "",
+        reportConfig: "",
+        dataJson: "",
+        isMobile: 0,
+        isTemp: 1
       },
       icon_img: "",
       upload_status: "",
@@ -199,20 +232,20 @@ export default {
       let p = {};
       self.$api.post(self.CONFIG.REST.getChartTypes, p).then(data => {
         if (data.status === "ok") self.types = data.data;
-        console.log(self.types);
         if (cb) cb();
       });
     },
     //保存/新增页面
     save(id) {
       let self = this;
-      let url =  self.CONFIG.REST.saveChart;
+      let url = self.CONFIG.REST.saveChart;
       self.form["reportId"] = this.$tool.getUuid();
       function judgeNull(param) {
         if (param === null || param === undefined || param.trim() === "")
           return true;
       }
-      if(self.illegalCode) return self.$tool.dialog("编码已存在，请重新输入", "warning");;
+      if (self.illegalCode)
+        return self.$tool.dialog("编码已存在，请重新输入", "warning");
       if (judgeNull(self.form.reportName))
         return self.$tool.dialog("请输入页面名称", "warning");
       if (judgeNull(self.form.reportCode))
@@ -232,7 +265,7 @@ export default {
     //保存/编辑页面
     edit() {
       let self = this;
-      let url =  self.CONFIG.REST.editChart;
+      let url = self.CONFIG.REST.editChart;
       function judgeNull(param) {
         if (param === null || param === undefined || param.trim() === "")
           return true;
@@ -250,6 +283,31 @@ export default {
           self.$options.methods.getRows(self);
         } else {
           self.$tool.dialog("修改失败", "error");
+        }
+      });
+    },
+    //保存/新增模板
+    saveModel(id) {
+      let self = this;
+      let url = self.CONFIG.REST.saveChart;
+      self.form_model["reportId"] = this.$tool.getUuid();
+      function judgeNull(param) {
+        if (param === null || param === undefined || param.trim() === "")
+          return true;
+      }
+      if (self.illegalCode)
+        return self.$tool.dialog("编码已存在，请重新输入", "warning");
+      if (judgeNull(self.form_model.reportName))
+        return self.$tool.dialog("请输入模板名称", "warning");
+      if (judgeNull(self.form_model.reportCode))
+        return self.$tool.dialog("请输入编码/key", "warning");
+      self.$api.post(url, self.form_model).then(data => {
+        if (data.status === "ok") {
+          self.$tool.dialog("保存成功", "success");
+          self.dialog_form_model = false;
+          self.$options.methods.getRows(self);
+        } else {
+          self.$tool.dialog("保存失败", "error");
         }
       });
     },
@@ -282,27 +340,35 @@ export default {
       this.upload_status = "";
       this.code_fun = "";
       this.icon_img = "";
-     this.dialog_form = true
+      this.dialog_form = true;
     },
     //打开编辑模态框
     showEditForm(item) {
       let self = this;
       self.illegalCode = false;
-      Object.assign(this.$data.form, this.$options.data().form);
+      Object.assign(this.$data.form_edit, this.$options.data().form_edit);
       self.form_edit.reportType = item.typecode;
       self.form_edit.reportName = item.reportname;
       self.form_edit.reportCode = item.reportcode;
       self.form_edit.reportId = item.reportid;
-      self.form_edit.isMobile = item.ismobile == '1' ? 1 : 0;
+      self.form_edit.isMobile = item.ismobile == "1" ? 1 : 0;
       self.dialog_form_edit = true;
-      console.log(self.form_edit)
-      // this.$options.methods.getChartDetail(this, id, data => {
-      //   if (data.status === "ok" && data.data.length>0) {
-      //     let d = data.data[0];
-      //   } else {
-      //     self.$tool.dialog("获取项目信息失败", "error");
-      //   }
-      // });
+    },
+    //打开模板模态框
+    showModelForm(id) {
+      let self = this;
+      self.illegalCode = false;
+      Object.assign(this.$data.form_model, this.$options.data().form_model);
+      self.$options.methods.getChartDetail(self, id, data => {
+        if (data.status === "ok" && data.data.length > 0) {
+          self.form_model.reportName = data.data[0].reportname;
+          self.form_model.reportId = this.$tool.getUuid();
+          self.form_model.isMobile = data.data[0].ismobile == "1" ? 1 : 0;
+          self.form_model.reportConfig = data.data[0].reportconfig;
+          self.form_model.dataJson = data.data[0].datajson;
+          self.dialog_form_model = true;
+        }
+      });
     },
     //获取页面详情
     getChartDetail(self, id, cb) {
@@ -322,35 +388,37 @@ export default {
       this.$tool.confirm("是否确定删除所选项？", () => {
         this.multipleSelection.forEach(item => {
           arr.push(item.reportid);
-          console.log(item);
         });
         let p = {
           reportId: arr.toString()
         };
         this.$api.post(this.CONFIG.REST.deleteChart, p).then(data => {
-          if (data.status === 'ok') {
+          if (data.status === "ok") {
             this.$tool.dialog("删除成功", "success");
             this.$options.methods.getRows(this);
-          }else{
+          } else {
             this.$tool.dialog("删除失败", "error");
           }
         });
       });
     },
     //验证报表编码重复性
-    verifReportCode(code,cb){
-      let p ={
-        chartCode:code
-      }
+    verifReportCode(code, cb) {
+      let p = {
+        chartCode: code
+      };
       this.$api.post(this.CONFIG.REST.verifReportCode, p).then(data => {
-          if (data.status === 'ok') {
-            cb(true)
-          }else{
-            cb(false)
-          }
-        });
+        if (data.status === "ok") {
+          cb(true);
+        } else {
+          cb(false);
+        }
+      });
     },
-    showQrcodeModel(item,cb) {
+    visitWeb(id) {
+      window.open(this.CONFIG.PAGESHOW_IP + "?reportId=" + id);
+    },
+    showQrcodeModel(item, cb) {
       return;
       $("#qrimg").attr("src", "");
       this.qrcode.title = item.name;
@@ -413,8 +481,7 @@ export default {
           this.dialog_form = false;
         }
       });
-    },
-    
+    }
   },
   mounted() {
     this.$nextTick(function() {

@@ -4,7 +4,7 @@
       <span>{{setting.title}}</span>
     </div>
     <div class="wbipt_textarea_right">
-      <textarea 
+      <textarea
       v-if="setting.model" 
       type="text"
       :rows="setting.rows || 5" 

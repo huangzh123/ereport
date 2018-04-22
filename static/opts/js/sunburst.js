@@ -4,16 +4,6 @@ let opt = {
   //   名称
   name: 'sunburst',
   //  Grid 配置
-  grid: {
-    "position-x": "0",
-    "position-y": "0",
-    "width": "12",
-    "height": "8",
-    "max-width": "12",
-    "min-width": "1",
-    "max-height": "100",
-    "min-height": "1"
-  },
   //  可配置项
   opts: [{
     groupName: '标题&副标题',
@@ -168,7 +158,126 @@ let opt = {
         ]
       },
     ]
-  }, ],
+  }, 
+  {
+    groupName: '数据&请求',
+    groupType: 'g2',
+    members: [{
+        title: '获取方式',
+        describe: '',
+        remark: '',
+        model: "others.datasways",
+        component: 'webInputRadio',
+        options: [{
+            label: "静态数据",
+            value: 1
+          },
+          {
+            label: "REST请求",
+            value: 2
+          },
+          {
+            label: "平台数据",
+            value: 3
+          },
+        ]
+      },
+      {
+        title: 'URL地址',
+        describe: '请输入URL地址',
+        remark: '',
+        isShow(opt) {
+          let others = opt.others;
+          return eval('others.datasways === 2')
+        },
+        model: "others.datasurl",
+        component: 'webInputText',
+        options: []
+      },
+      {
+        title: '数据源',
+        describe: '',
+        remark: '',
+        isShow(opt) {
+          let others = opt.others;
+          return eval('others.datasways === 3')
+        },
+        init(opt, cb) {
+          let self = opt.self;
+          let setting = opt.setting;
+          let _js = "self.$api.get(self.CONFIG.REST.dataSourceList).then(data => {if (data.status === 'ok') {let arr = [];for (let i = 0; i < data.data.length; i++) {let o = {label: data.data[i]['dsname'],value: data.data[i]['dsid']};arr.push(o);}setting.options = arr;}});"
+          eval(_js);
+
+          if (cb) cb();
+        },
+        model: "others.datasource",
+        component: 'webSelect',
+        options: []
+      },
+      {
+        title: 'SQL语句',
+        describe: '请输入SQL语句',
+        rows: 8,
+        remark: '',
+        isShow(opt) {
+          let others = opt.others;
+          return eval('others.datasways === 3')
+        },
+        model: "others.datasql",
+        component: 'webInputTextarea',
+        options: []
+      },
+      {
+        title: '请求JSON数据',
+        describe: '',
+        remark: '',
+        isShow(opt) {
+          let others = opt.others;
+          return eval('others.datasways === 3')
+        },
+        click(opt, cb) {
+          let self = opt.self;
+          let setting = opt.setting;
+          let contents = opt.contents;
+          let others = opt.others;
+          let _js = "self.$api.post(self.CONFIG.REST.connectDataSource,{chartType:'0301',dsId:others.datasource,dataMode:0,dataExpr:others.datasql}).then(data => {if (data.status === 'ok') {contents.series[0].data = data.data;contents.series[0].data = data.data;others.updated++;}});"
+          eval(_js);
+          if (cb) cb();
+        },
+        component: 'webInputConfirm',
+        options: []
+      },
+      {
+        title: '请求结果',
+        describe: '请求后的JSON数据',
+        rows: 14,
+        remark: '',
+        format(val) {
+          let str = '';
+          if (typeof val === 'object')
+            try {
+              str = JSON.stringify(val, null, ' ')
+            } catch (e) {
+              str = val;
+            }
+          return str;
+        },
+        reformat(val) {
+          let str = [];
+          if (typeof val === 'string')
+            try {
+              str = JSON.parse(val)
+            } catch (e) {
+              // str = val;
+            }
+          return str;
+        },
+        disabled: true,
+        model: "contents.series[0].data",
+        component: 'webInputTextarea',
+      },
+    ]
+  },],
   //  内容（chart配置）
   contents: {
     title: {
@@ -188,61 +297,62 @@ let opt = {
       left: 'auto',
       top: 'auto',
     },
-    series: {
-        type: 'sunburst',
-        // highlightPolicy: 'ancestor',
-        data: [{
-          name: 'Grandpa',
+
+    series: [{
+      type: 'sunburst',
+      // highlightPolicy: 'ancestor',
+      data: [{
+        name: 'Grandpa',
+        children: [{
+          name: 'Uncle Leo',
+          value: 15,
           children: [{
-            name: 'Uncle Leo',
-            value: 15,
+            name: 'Cousin Jack',
+            value: 2
+          }, {
+            name: 'Cousin Mary',
+            value: 5,
             children: [{
-              name: 'Cousin Jack',
+              name: 'Jackson',
               value: 2
-            }, {
-              name: 'Cousin Mary',
-              value: 5,
-              children: [{
-                name: 'Jackson',
-                value: 2
-              }]
-            }, {
-              name: 'Cousin Ben',
-              value: 4
             }]
           }, {
-            name: 'Father',
-            value: 10,
-            children: [{
-              name: 'Me',
-              value: 5
-            }, {
-              name: 'Brother Peter',
-              value: 1
-            }]
+            name: 'Cousin Ben',
+            value: 4
           }]
         }, {
-          name: '极坐标图',
+          name: 'Father',
+          value: 10,
           children: [{
-            name: 'Uncle Nike',
-            children: [{
-              name: 'Cousin Betty',
-              value: 1
-            }, {
-              name: 'Cousin Jenny',
-              value: 2
-            }]
+            name: 'Me',
+            value: 5
+          }, {
+            name: 'Brother Peter',
+            value: 1
           }]
-        }],
-        radius: [0, '90%'],
-        label: {
-          rotate: 'radial'
-        }
-      },
+        }]
+      }, {
+        name: '极坐标图',
+        children: [{
+          name: 'Uncle Nike',
+          children: [{
+            name: 'Cousin Betty',
+            value: 1
+          }, {
+            name: 'Cousin Jenny',
+            value: 2
+          }]
+        }]
+      }],
+      radius: [0, '90%'],
+      label: {
+        rotate: 'radial'
+      }
+    }],
     backgroundColor: "#fff"
   },
   others: {
-    openMenu: [1, 2, 8, 9],
+    openMenu: [1, 2, 3],
     datasways: 1, //获取方式
     datasource: "", //数据源
     datasql: "select a.natural_village_name,count(b.building_id ) as count from building b left join natural_village a on a.natural_village_id=b.natural_village_id GROUP BY a.natural_village_name", //sql语句

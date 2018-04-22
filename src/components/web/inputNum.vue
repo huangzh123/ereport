@@ -19,20 +19,32 @@ export default {
        returnVal: (contents, others,str) => {
         return eval(str);
       },
-      num:1
+      num:1 
     };
   },
    mounted(){
-    this.num =  this.returnVal( this.contents,this.others, this.setting.model)
+    // this.num =  this.returnVal( this.contents,this.others, this.setting.model)
+
+    let v = this.returnVal(this.contents,this.others, this.setting.model);
+    if(this.setting.initformat) v = this.setting.initformat(v);
+    this.num = v;
   },
   methods: {
     updateValue(value) {
-      this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
+      // this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
+      
+      let v = value;
+      if(this.setting.format) v = this.setting.format(value);
+      this.$emit("updateValue", v, this.setting.model, this.cid); //自定义事件，并传参
     }
   },
     watch: {
     cid(val){
-      this.num =  this.returnVal( this.contents,this.others, this.setting.model)
+      // this.num =  this.returnVal( this.contents,this.others, this.setting.model);
+
+      let v = this.returnVal(this.contents,this.others, this.setting.model);
+      if(this.setting.initformat) v = this.setting.initformat(v);
+      this.num = v;
     }
   }
 };

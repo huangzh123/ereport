@@ -4,16 +4,7 @@ let opt = {
   //   名称
   name: 'line',
   //  Grid 配置
-  grid: {
-    "position-x": "0",
-    "position-y": "0",
-    "width": "12",
-    "height": "7",
-    "max-width": "12",
-    "min-width": "1",
-    "max-height": "100",
-    "min-height": "1"
-  },
+
   //  可配置项（菜单组）
   opts: [{
       groupName: '常规',
@@ -919,6 +910,38 @@ let opt = {
           ]
         },
         {
+          title: '分割线',
+          describe: '',
+          remark: '',
+          model: "contents.yAxis.splitLine.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '分割区域',
+          describe: '',
+          remark: '',
+          model: "contents.yAxis.splitArea.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
           title: '轴 线',
           describe: '',
           remark: '',
@@ -1511,6 +1534,46 @@ let opt = {
           options: []
         },
         {
+          title: '调用频率',
+          describe: '',
+          remark: '',
+          isShow(opt) {
+            let others = opt.others;
+            return others.datasways === 3 || others.datasways === 2
+          },
+          model: "others.between",
+          component: 'webSelect',
+          options: [{
+              label: '单次',
+              value: 0,
+            },
+            {
+              label: '每1秒钟',
+              value: 1000,
+            },
+            {
+              label: '每5秒钟',
+              value: 5 * 1000,
+            },
+            {
+              label: '每0.5分钟',
+              value: 0.5 * 60 * 1000,
+            },
+            {
+              label: '每1分钟',
+              value: 60 * 1000,
+            },
+            {
+              label: '每0.5小时',
+              value: 0.5 * 60 * 60 * 1000,
+            },
+            {
+              label: '每1小时',
+              value: 60 * 60 * 1000,
+            },
+          ]
+        },
+        {
           title: 'SQL语句',
           describe: '请输入SQL语句',
           rows: 8,
@@ -1518,6 +1581,9 @@ let opt = {
           isShow(opt) {
             let others = opt.others;
             return others.datasways === 3
+          },
+          reformat(value) {
+            return value.replace(/[\n\r]/g, ' ')
           },
           model: "others.datasql",
           component: 'webInputTextarea',
@@ -1528,26 +1594,27 @@ let opt = {
           describe: '',
           icon: 'icon-msnui-cloud-download',
           remark: '',
+          loading: false,
           isShow(opt) {
             let others = opt.others;
             return others.datasways === 3;
           },
           click(opt, cb) {
             let self = opt.self;
-            let setting = opt.setting;
-            let contents = opt.contents;
-            let others = opt.others;
-            self.$api.post(self.CONFIG.REST.connectDataSource, {
-              chartType: '0301',
-              dsId: others.datasource,
-              dataMode: 0,
-              dataExpr: others.datasql
-            }).then(data => {
-              if (data.status === 'ok') {
-                others.datajson = data.data;
+            self.setting.loading = true;
+            self.id = self.cid;
+            let str = "self.$options.methods.getChartData(self,'" + self.cid + "_dump','" + self.cid + "',undefined,cb)";
+            self.$options.methods.triggerMethod(self, str, (err, data) => {
+              if (!err) {
+                self.others.datajson = data;
+              } else {
+                self.$message.error('请求失败');
               }
-            });
-            if (cb) cb();
+              setTimeout(() => {
+                self.setting.loading = false;
+              }, 800);
+              if (cb) cb();
+            })
           },
           component: 'webInputConfirm',
           options: []
@@ -1556,21 +1623,12 @@ let opt = {
           title: '数据/结果',
           describe: '请求后的JSON数据',
           rows: 14,
+          loading: false,
           remark: '',
           init(opt, cb) {
-            let self = opt.self;
-            let setting = opt.setting;
             let others = opt.others;
             let contents = opt.contents;
-            let str = '';
-            let val = contents.dataset.source;
-            if (typeof val === 'object')
-              try {
-                str = JSON.stringify(val, null, ' ')
-              } catch (e) {
-                str = val;
-              }
-            others.datajson = str;
+            others.datajson = contents.dataset.source;
             if (cb) cb();
           },
           format(val) {
@@ -1583,6 +1641,16 @@ let opt = {
               }
             return str;
           },
+          reformat(val) {
+            let str = val;
+            if (typeof val === 'string')
+              try {
+                str = JSON.parse(val)
+              } catch (e) {
+                str = val;
+              }
+            return str;
+          },
           disabled: true,
           model: "others.datajson",
           component: 'webInputTextarea',
@@ -1590,26 +1658,32 @@ let opt = {
         {
           title: ' 更新数据',
           describe: '',
+          loading: false,
           btnclass: 'dn_daset_rfbtn',
           icon: 'icon-shuaxin1',
           remark: '',
           click(opt, cb) {
             let self = opt.self;
-            let setting = opt.setting;
             let contents = opt.contents;
-            let others = opt.others;
-            let cid = opt.cid;
-            let json = others.datajson;
-            if (typeof others.datajson === 'string')
+            let json = opt.others.datajson;
+            opt.setting.loading = true;
+            if (typeof opt.others.datajson === 'string') {
+              let temp = opt.others.datajson.replace(/\'/g, "\"");
               try {
-                json = JSON.parse(others.datajson)
+                json = JSON.parse(temp)
               } catch (e) {
-                json = [];
+                setTimeout(() => {
+                  opt.setting.loading = false;
+                }, 500);
+                return self.$message.error('更新失败：数据集不是有效的JSON字符串');
               }
-            console.log(others.datajson, json)
+            }
             contents.dataset.source = json;
-            self.$emit("updateValue", contents.dataset.source, "contents.dataset.source", cid);
-            others.updated++;
+            self.$emit("updateValue", contents.dataset.source, "contents.dataset.source", opt.cid);
+            opt.others.updated++;
+            setTimeout(() => {
+              opt.setting.loading = false;
+            }, 500);
             if (cb) cb();
           },
           component: 'webInputConfirm',
@@ -1626,27 +1700,24 @@ let opt = {
           remark: '',
           init(opt, cb) {
             let self = opt.self;
-            let setting = opt.setting;
-            let others = opt.others;
-            let contents = opt.contents;
             let arr = [];
-            let d = contents.dataset.source;
+            let d = opt.contents.dataset.source;
             if (d && d !== '') {
               let type = self.$tool.getType(d);
               if (type === 'string') d = JSON.parse(d);
               type = self.$tool.getType(d);
               if (type === 'array' && d.length > 0)
-                for (let k in d[0]){
+                for (let k in d[0]) {
                   arr.push({
                     label: k,
                     value: k
                   });
-                  if(typeof d[0][k] === 'string'){
-                    // contents.series[0].encode.x = k;
+                  if (typeof d[0][k] === 'string') {
+                    // opt.contents.series[0].encode.x = k;
                   }
                 }
             }
-            setting.options = arr;
+            opt.setting.options = arr;
             if (cb) cb();
           },
           model: "contents.series[0].encode.x",
@@ -1659,34 +1730,189 @@ let opt = {
           remark: '',
           init(opt, cb) {
             let self = opt.self;
-            let setting = opt.setting;
-            let others = opt.others;
-            let contents = opt.contents;
             let arr = [];
-            let d = contents.dataset.source;
+            let d = opt.contents.dataset.source;
             if (d && d !== '') {
               let type = self.$tool.getType(d);
               if (type === 'string') d = JSON.parse(d);
               type = self.$tool.getType(d);
               if (type === 'array' && d.length > 0)
-                for (let k in d[0]){
+                for (let k in d[0]) {
                   arr.push({
                     label: k,
                     value: k
                   });
                   let x = '';
-                  if(typeof d[0][k] === 'number'){
-                    // contents.series[0].encode.y = k;
+                  if (typeof d[0][k] === 'number') {
+                    // opt.contents.series[0].encode.y = k;
                   }
                 }
             }
-            setting.options = arr;
+            opt.setting.options = arr;
             if (cb) cb();
           },
           model: "contents.series[0].encode.y",
           component: 'webSelect',
           options: []
         },
+      ]
+    },
+    {
+      groupName: '联动',
+      groupType: 'g2',
+      members: [{
+          title: '联 动',
+          describe: '',
+          remark: '',
+          model: "others.isLinkage",
+          component: 'webInputRadio',
+          options: [{
+              label: "是",
+              value: true
+            },
+            {
+              label: "否",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '触发方式',
+          describe: '',
+          remark: '',
+          model: "others.triggerLink",
+          component: 'webSelect',
+          options: [{
+              label: '点击',
+              value: 'click'
+            },
+            {
+              label: '双击',
+              value: 'dblclick'
+            }
+          ]
+        },
+        {
+          title: '联动类型',
+          describe: '',
+          remark: '',
+          model: "others.linkageType",
+          component: 'webSelect',
+          options: [{
+              label: '维度',
+              value: 'x'
+            },
+            {
+              label: '度量',
+              value: 'y'
+            }
+          ]
+        },
+        {
+          title: '联动图表',
+          describe: '选择联动的图表',
+          remark: '',
+          visibleChange(opt) {
+            let self = opt.self;
+            if (opt.status) {
+              let str = 'self.$options.methods.getAllActiveReport(self,"' + opt.cid + '",cb)'
+              self.$options.methods.triggerMethod(self, str, (arr) => {
+                opt.setting.options = arr || [];
+              })
+            }
+          },
+          multiple: true,
+          model: "others.linkArrs",
+          component: 'webSelect',
+          options: []
+        },
+      ]
+    },
+    {
+      groupName: '钻取',
+      groupType: 'g2',
+      members: [{
+          title: '钻 取',
+          describe: '',
+          remark: '',
+          model: "others.isDrill",
+          component: 'webInputRadio',
+          options: [{
+              label: "是",
+              value: true
+            },
+            {
+              label: "否",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '触发方式',
+          describe: '',
+          remark: '',
+          model: "others.triggerType",
+          component: 'webSelect',
+          options: [{
+              label: '点击',
+              value: 'click'
+            },
+            {
+              label: '双击',
+              value: 'dblclick'
+            }
+          ]
+        },
+        {
+          title: '钻取类型',
+          describe: '',
+          remark: '',
+          model: "others.drillType",
+          component: 'webSelect',
+          options: [{
+              label: '维度',
+              value: 'x'
+            },
+            {
+              label: '度量',
+              value: 'y'
+            }
+          ]
+        },
+        {
+          title: ' 编辑钻取页面',
+          describe: '',
+          btnclass: 'dn_drillbtn',
+          icon: 'icon-baocunbingxiayibu',
+          remark: '',
+          click(opt, cb) {
+            let self = opt.self;
+            let cid = opt.cid;
+            let others = opt.others;
+            let parentId = self.$route.query.reportId;
+            others.childId = others.childId || self.$tool.getUuid();
+            console.log(window.location.origin)
+            let url = window.location.origin + '/#/design-child?parentId=' + parentId + '&moduleId=' + cid + '&rid=' + others.childId;
+            window.open(url);
+            return;
+            self.$confirm('是否保存当前页面，并打开钻取的页面?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              let str = "self.$options.methods.save(self,cb)";
+              self.$options.methods.triggerMethod(self, str, (result) => {
+                if (!result) return;
+                let url = 'http://localhost:8080/#/design-child?parentId=' + parentId + '&moduleId=' + cid;
+                window.open(url);
+              })
+            })
+            if (cb) cb();
+          },
+          component: 'webInputConfirm',
+          options: []
+        },
+
       ]
     },
   ],
@@ -1850,12 +2076,19 @@ let opt = {
         fontSize: 12,
         show: true //隐藏刻度
       },
+      splitLine: {
+        show: true
+      },
+      splitArea: {
+        show: false
+      },
       boundaryGap: false, //中间描点
     },
     series: [{
       // data:[],
       name: '销售量',
       type: 'line',
+      connectNulls: true,
       symbol: 'emptyCircle',
       symbolSize: 4,
       symbolRotate: 0,
@@ -1927,14 +2160,22 @@ let opt = {
     backgroundColor: "#fff"
   },
   others: {
-    openMenu: [1, 2, 10, 9],
+    openMenu: [1, 2, 9],
     datasways: 1, //获取方式
     datasource: "", //数据源
     datasql: "select a.natural_village_name,count(b.building_id ) as count from building b left join natural_village a on a.natural_village_id=b.natural_village_id GROUP BY a.natural_village_name", //sql语句
     datasurl: "", //URL地址
-    datajson: "",
-    updated: 1
-
+    datajson: [],
+    between: '', //调用频率
+    updated: 1,
+    isDrill: false,
+    drillType: 'x',
+    triggerType: 'click',
+    childId: '',
+    isLinkage: false,
+    linkageType: 'x',
+    triggerLink: 'click',
+    linkArrs: [],
   }
 };
 

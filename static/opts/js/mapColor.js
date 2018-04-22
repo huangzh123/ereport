@@ -146,9 +146,9 @@ let opt = {
   grid: {
     "position-x": "0",
     "position-y": "0",
-    "width": "12",
+    "width": "30",
     "height": "12",
-    "max-width": "12",
+    "max-width": "60",
     "min-width": "1",
     "max-height": "100",
     "min-height": "1"
@@ -637,6 +637,250 @@ let opt = {
       ]
     },
     {
+      groupName: '提示框',
+      groupType: 'g1',
+      members: [{
+          title: '提示框',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '提示浮层',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.showContent",
+          component: 'webInputRadio',
+          options: [{
+            label: "是",
+            value: true
+          }, {
+            label: "否",
+            value: false
+          }, ]
+        },
+        {
+          title: '浮层常驻',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.alwaysShowContent",
+          component: 'webInputRadio',
+          options: [{
+            label: "是",
+            value: true
+          }, {
+            label: "否",
+            value: false
+          }, ]
+        },
+        {
+          title: '触发方式',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.triggerOn",
+          component: 'webSelect',
+          options: [{
+              label: "鼠标移动",
+              value: 'mousemove'
+            }, {
+              label: "鼠标点击",
+              value: 'click'
+            },
+            {
+              label: "移动或点击",
+              value: 'mousemove|click'
+            },
+          ]
+        },
+        {
+          title: '格式化',
+          describe: '',
+          remark: '{a}, {b},{c}分别表示系列名，数据名，数据值',
+          model: "contents.tooltip.formatter",
+          component: 'webInputText',
+        },
+        {
+          title: '浮层背景色',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.backgroundColor",
+          component: 'webInputColor'
+        },
+        {
+          title: '浮层字大小',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.tooltip.textStyle.fontSize",
+          component: 'webInputNum'
+        },
+        {
+          title: '浮层字颜色',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.textStyle.color",
+          component: 'webInputColor'
+        },
+      ]
+    },
+    {
+      groupName: '视觉&映射',
+      groupType: 'g1',
+      members: [{
+          title: '是否显示',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        }, {
+          title: '高 度',
+          describe: '',
+          remark: '',
+          max: 300,
+          model: "contents.visualMap.itemHeight",
+          component: 'webInputSlider'
+        }, {
+          title: '宽 度',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.itemWidth",
+          component: 'webInputSlider'
+        }, {
+          title: '水平位置',
+          describe: '',
+          remark: '',
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            if (typeof val === 'number') return val;
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.visualMap.left",
+          component: 'webInputSlider'
+        }, {
+          title: '垂直位置',
+          describe: '',
+          remark: '',
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            if (typeof val === 'number') return val;
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.visualMap.bottom",
+          component: 'webInputSlider'
+        },
+        {
+          title: '最大值',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.max",
+          component: 'webInputText'
+        },
+        {
+          title: '最小值',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.min",
+          component: 'webInputText'
+        },
+        {
+          title: '顶部文字',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.text[0]",
+          component: 'webInputText'
+        },
+        {
+          title: '底部文字',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.text[1]",
+          component: 'webInputText'
+        }, {
+          title: '拖拉按钮',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.calculable",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '字体颜色',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.textStyle.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '组件反转',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.inverse",
+          component: 'webInputRadio',
+          options: [{
+              label: "是",
+              value: true
+            },
+            {
+              label: "否",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '色值1',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.color[2]",
+          component: 'webInputColor'
+        },
+        {
+          title: '色值2',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.color[1]",
+          component: 'webInputColor'
+        },
+        {
+          title: '色值3',
+          describe: '',
+          remark: '',
+          model: "contents.visualMap.color[0]",
+          component: 'webInputColor'
+        },
+      ]
+    },
+    {
       groupName: '图例',
       groupType: 'g1',
       members: [{
@@ -798,16 +1042,35 @@ let opt = {
     legend: {
       show: false //是否显示图例
     },
+    tooltip: {
+      show: true,
+      trigger: 'item',
+      showContent: true,
+      alwaysShowContent: false,
+      triggerOn: "mousemove|click",
+      formatter: '',
+      backgroundColor: 'rgba(50,50,50,0.7)',
+      textStyle: {
+        color: "#fff",
+        fontSize: 12
+      }
+    },
     visualMap: {
-      min: 0,
-      max: 2500,
-      left: 'left',
-      top: 'bottom',
+      show: true,
+      type: 'continuous',
       text: ['高', '低'], // 文本，默认为数值文本
       calculable: true,
-    },
-    tooltip: {
-      trigger: 'item',
+      inverse: false,
+      left: 0,
+      bottom: 0,
+      itemWidth: 20,
+      itemHeight: 140,
+      min: 0,
+      max: 2500,
+      color: ['rgba(34, 159, 237, 1)', 'rgba(34, 159, 237, 1)', 'rgba(240, 254, 255, 1)'],
+      textStyle: {
+        color: '#333'
+      }
     },
     series: [{
       data: data,
@@ -838,9 +1101,9 @@ let opt = {
           fontSize: '12'
         },
         itemStyle: {
-          areaColor: "rgba(255, 234, 0, 1)",
+          areaColor: "rgba(51, 214, 225, 0.38)",
           color: "#eee",
-          borderColor: "rgba(234, 77, 10, 1)",
+          borderColor: "rgba(20, 196, 131, 1)",
         },
       }
     }],
@@ -850,7 +1113,7 @@ let opt = {
     backgroundColor: "#fff"
   },
   others: {
-    openMenu: [1, 2, 7],
+    openMenu: [1, 2, 10],
     datasways: 1, //获取方式
     datasource: "", //数据源
     datasql: "select a.natural_village_name,count(b.building_id ) as count from building b left join natural_village a on a.natural_village_id=b.natural_village_id GROUP BY a.natural_village_name", //sql语句

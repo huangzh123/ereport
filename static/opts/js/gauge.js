@@ -7,15 +7,100 @@ let opt = {
   grid: {
     "position-x": "0",
     "position-y": "0",
-    "width": "12",
-    "height": "9",
-    "max-width": "12",
+    "width": "30",
+    "height": "12",
+    "max-width": "60",
     "min-width": "1",
     "max-height": "100",
     "min-height": "1"
   },
   //  可配置项
-  opts: [
+  opts: [{
+      groupName: '常规',
+      groupType: 'g1',
+      members: [{
+          title: '表盘半径',
+          describe: '',
+          remark: '',
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].radius",
+          component: 'webInputSlider'
+        },
+        {
+          title: '起始角度',
+          describe: '',
+          remark: '',
+          max: 360,
+          min: -360,
+          model: "contents.series[0].startAngle",
+          component: 'webInputSlider'
+        },
+        {
+          title: '终点角度',
+          describe: '',
+          remark: '',
+          max: 360,
+          min: -360,
+          model: "contents.series[0].endAngle",
+          component: 'webInputSlider'
+        },
+        {
+          title: '递增方向',
+          describe: '',
+          isShow() {
+            return 0;
+          },
+          remark: '',
+          model: "contents.series[0].clockwise",
+          component: 'webInputRadio',
+          options: [{
+              label: "顺时针",
+              value: true
+            },
+            {
+              label: "逆时针",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '最小值',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.series[0].min",
+          component: 'webInputNum'
+        },
+        {
+          title: '最大值',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.series[0].max",
+          component: 'webInputNum'
+        },
+        {
+          title: '分割段数',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.series[0].splitNumber",
+          component: 'webInputNum'
+        },
+        {
+          title: '背景色',
+          describe: '',
+          remark: '',
+          model: "contents.backgroundColor",
+          component: 'webInputColor'
+        }
+      ]
+    },
     {
       groupName: '标题&副标题',
       groupType: 'g1',
@@ -170,6 +255,639 @@ let opt = {
         },
       ]
     },
+    {
+      groupName: '轴线&分割线',
+      groupType: 'g1',
+      members: [{
+          title: '轴线宽度',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLine.lineStyle.width",
+          component: 'webInputSlider'
+        },
+        {
+          title: '轴1颜色',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[0][1]",
+          component: 'webInputColor'
+        },
+        {
+          title: '轴2颜色',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[1][1]",
+          component: 'webInputColor'
+        },
+        {
+          title: '轴3颜色',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[2][1]",
+          component: 'webInputColor'
+        },
+        {
+          title: '轴1位置',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[0][0]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '轴2位置',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[1][0]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '轴3位置',
+          describe: '',
+          remark: '',
+          max: 1,
+          step: 0.1,
+          model: "contents.series[0].axisLine.lineStyle.color[2][0]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '分割线色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].splitLine.lineStyle.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '分割线长',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].splitLine.length",
+          component: 'webInputSlider'
+        },
+        {
+          title: '分割线宽',
+          describe: '',
+          max: 10,
+          remark: '',
+          model: "contents.series[0].splitLine.lineStyle.width",
+          component: 'webInputSlider'
+        },
+      ]
+    },
+    {
+      groupName: '刻度&标签',
+      groupType: 'g1',
+      members: [{
+          title: '刻度数',
+          describe: '',
+          remark: '',
+          max: 10,
+          model: "contents.series[0].axisTick.splitNumber",
+          component: 'webInputSlider'
+        },
+        {
+          title: '刻度线长',
+          describe: '',
+          remark: '',
+          max: 50,
+          model: "contents.series[0].axisTick.length",
+          component: 'webInputSlider'
+        },
+        {
+          title: '刻度线宽',
+          describe: '',
+          remark: '',
+          max: 10,
+          step: 0.1,
+          model: "contents.series[0].axisTick.lineStyle.width",
+          component: 'webInputSlider'
+        },
+        {
+          title: '刻度线色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisTick.lineStyle.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '刻度标签',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLabel.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '标签距离',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLabel.distance",
+          component: 'webInputSlider',
+        },
+        {
+          title: '标签格式化',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLabel.formatter",
+          component: 'webInputText',
+        },
+        {
+          title: '标签颜色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLabel.color",
+          component: 'webInputColor',
+        },
+        {
+          title: '字体粗细',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].axisLabel.fontWeight",
+          component: 'webSelect',
+          options: [{
+              label: '细体',
+              value: 'lighter',
+            },
+            {
+              label: '正常',
+              value: 'normal',
+            },
+            {
+              label: '粗体',
+              value: 'bold',
+            },
+            {
+              label: '大粗体',
+              value: 'bolder',
+            },
+          ]
+        },
+        {
+          title: '字体大小',
+          describe: '',
+          remark: '',
+          max: 50,
+          model: "contents.series[0].axisLabel.fontSize",
+          component: 'webInputNum',
+        },
+      ]
+    },
+    {
+      groupName: '指针',
+      groupType: 'g1',
+      members: [{
+          title: '指针',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].pointer.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '指针颜色',
+          describe: '',
+          remark: '不设置任何值时,默认会取当前的区间颜色',
+          model: "contents.series[0].itemStyle.color",
+          component: 'webInputColor',
+        },
+        {
+          title: '指针宽度',
+          describe: '',
+          remark: '',
+          max: 50,
+          model: "contents.series[0].pointer.width",
+          component: 'webInputSlider',
+        },
+        {
+          title: '指针长度',
+          describe: '',
+          remark: '',
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].pointer.length",
+          component: 'webInputSlider',
+        },
+        {
+          title: '描边颜色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].itemStyle.borderColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '描边宽度',
+          describe: '',
+          remark: '',
+          max: 10,
+          model: "contents.series[0].itemStyle.borderWidth",
+          component: 'webInputSlider',
+        },
+        {
+          title: '阴影颜色',
+          describe: '',
+          isShow() {
+            return 0
+          },
+          remark: '',
+          model: "contents.series[0].itemStyle.shadowColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '阴影大小',
+          describe: '',
+          isShow() {
+            return 0
+          },
+          remark: '',
+          model: "contents.series[0].itemStyle.shadowBlur",
+          component: 'webInputSlider',
+        },
+      ]
+    },
+    {
+      groupName: '内容&表头',
+      groupType: 'g1',
+      members: [{
+          title: '内 容',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].detail.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '水平偏移',
+          describe: '',
+          remark: '',
+          min: -100,
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].detail.offsetCenter[0]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '垂直偏移',
+          describe: '',
+          min: -100,
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].detail.offsetCenter[1]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '字体颜色',
+          describe: '',
+          remark: '不设置任何值时,默认会取当前的区间颜色',
+          model: "contents.series[0].detail.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '字体大小',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.series[0].detail.fontSize",
+          component: 'webInputNum'
+        },
+        {
+          title: '背景色',
+          describe: '',
+          remark: '',
+          max: 10,
+          model: "contents.series[0].detail.backgroundColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '描边颜色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].detail.borderColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '描边宽度',
+          describe: '',
+          remark: '',
+          max: 10,
+          model: "contents.series[0].detail.borderWidth",
+          component: 'webInputSlider',
+        },
+        {
+          title: '表 头',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].title.show",
+          component: 'webInputRadio',
+          options: [{
+              label: "显示",
+              value: true
+            },
+            {
+              label: "隐藏",
+              value: false
+            },
+          ]
+        },
+        {
+          title: '水平偏移',
+          describe: '',
+          remark: '',
+          min: -100,
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].title.offsetCenter[0]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '垂直偏移',
+          describe: '',
+          min: -100,
+          format(val) {
+            return val + '%';
+          },
+          initformat(val) {
+            return parseInt(val.substr(0, val.length - 1))
+          },
+          model: "contents.series[0].title.offsetCenter[1]",
+          component: 'webInputSlider'
+        },
+        {
+          title: '字体颜色',
+          describe: '',
+          remark: '',
+          model: "contents.series[0].title.color",
+          component: 'webInputColor'
+        },
+        {
+          title: '字体大小',
+          describe: '',
+          remark: '',
+          min: 0,
+          model: "contents.series[0].title.fontSize",
+          component: 'webInputNum'
+        },
+        {
+          title: '背景色',
+          describe: '',
+          remark: '',
+          max: 10,
+          model: "contents.series[0].title.backgroundColor",
+          component: 'webInputColor',
+        }
+      ]
+    },
+    {
+      groupName: '提示框',
+      groupType: 'g1',
+      members: [{
+          title: '显示浮层',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.show",
+          component: 'webInputRadio',
+          options: [{
+              label: '显示',
+              value: true
+            },
+            {
+              label: '隐藏',
+              value: false
+            },
+
+          ]
+        },
+        {
+          title: '浮层常驻',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.alwaysShowContent",
+          component: 'webInputRadio',
+          options: [{
+              label: '显示',
+              value: true
+            },
+            {
+              label: '隐藏',
+              value: false
+            },
+
+          ]
+        },
+        {
+          title: '格式化',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.formatter",
+          component: 'webInputText',
+        },
+
+        {
+          title: '边框宽度',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.borderWidth",
+          component: 'webInputNum',
+        },
+        {
+          title: '边框颜色',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.borderColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '背景色',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.backgroundColor",
+          component: 'webInputColor',
+        },
+        {
+          title: '字体颜色',
+          describe: '',
+          remark: '',
+          model: "contents.tooltip.textStyle.color",
+          component: 'webInputColor',
+        },
+
+        //   {
+        //     title: '格式化',
+        //     describe: '',
+        //     remark: '',
+        //     model: "contents.tooltip.formatter",
+        //     component: 'webInputText',
+        //   },
+
+      ]
+    },
+    {
+      groupName: '数据&请求',
+      groupType: 'g2',
+      members: [{
+          title: '获取方式',
+          describe: '',
+          remark: '',
+          model: "others.datasways",
+          component: 'webInputRadio',
+          options: [{
+              label: "静态数据",
+              value: 1
+            },
+            {
+              label: "REST请求",
+              value: 2
+            },
+            {
+              label: "平台数据",
+              value: 3
+            },
+          ]
+        },
+        {
+          title: 'URL地址',
+          describe: '请输入URL地址',
+          remark: '',
+          isShow(opt) {
+            let others = opt.others;
+            return eval('others.datasways === 2')
+          },
+          model: "others.datasurl",
+          component: 'webInputText',
+          options: []
+        },
+        {
+          title: '数据源',
+          describe: '',
+          remark: '',
+          isShow(opt) {
+            let others = opt.others;
+            return eval('others.datasways === 3')
+          },
+          init(opt, cb) {
+            let self = opt.self;
+            let setting = opt.setting;
+            let _js = "self.$api.get(self.CONFIG.REST.dataSourceList).then(data => {if (data.status === 'ok') {let arr = [];for (let i = 0; i < data.data.length; i++) {let o = {label: data.data[i]['dsname'],value: data.data[i]['dsid']};arr.push(o);}setting.options = arr;}});"
+            eval(_js);
+
+            if (cb) cb();
+          },
+          model: "others.datasource",
+          component: 'webSelect',
+          options: []
+        },
+        {
+          title: 'SQL语句',
+          describe: '请输入SQL语句',
+          rows: 8,
+          remark: '',
+          isShow(opt) {
+            let others = opt.others;
+            return eval('others.datasways === 3')
+          },
+          model: "others.datasql",
+          component: 'webInputTextarea',
+          options: []
+        },
+        {
+          title: '请求JSON数据',
+          describe: '',
+          remark: '',
+          isShow(opt) {
+            let others = opt.others;
+            return eval('others.datasways === 3')
+          },
+          click(opt, cb) {
+            let self = opt.self;
+            let setting = opt.setting;
+            let contents = opt.contents;
+            let others = opt.others;
+            let _js = "self.$api.post(self.CONFIG.REST.connectDataSource,{chartType:'0301',dsId:others.datasource,dataMode:0,dataExpr:others.datasql}).then(data => {if (data.status === 'ok') {contents.series[0].data = data.data;contents.series[0].data = data.data;others.updated++;}});"
+            eval(_js);
+            if (cb) cb();
+          },
+          component: 'webInputConfirm',
+          options: []
+        },
+        {
+          title: '请求结果',
+          describe: '请求后的JSON数据',
+          rows: 14,
+          remark: '',
+          format(val) {
+            let str = '';
+            if (typeof val === 'object')
+              try {
+                str = JSON.stringify(val, null, ' ')
+              } catch (e) {
+                str = val;
+              }
+            return str;
+          },
+          reformat(val) {
+            let str = [];
+            if (typeof val === 'string')
+              try {
+                str = JSON.parse(val)
+              } catch (e) {
+                // str = val;
+              }
+            return str;
+          },
+          disabled: true,
+          model: "contents.series[0].data",
+          component: 'webInputTextarea',
+        },
+      ]
+    },
   ],
   //  内容（chart配置）
   contents: {
@@ -207,96 +925,104 @@ let opt = {
         color: "#fff",
         fontSize: 12
       }
-
     },
     legend: {
-        show: true //是否显示图例
-      },
+      show: true //是否显示图例
+    },
     series: [{
-        type: 'gauge',
-        radius: '75%',
-        startAngle: 225,
-        endAngle: -45,
-        clockwise: true, //是否顺时针增长
-        splitNumber: 10, //刻度
-        axisLine: { //轴线
-          show: true,
-          width: 30, //轴线宽度
-          lineStyle: {
-            color: [
-              [0.2, '#91c7ae'],
-              [0.8, '#63869e'],
-              [1, '#c23531']
-            ],
-            shadowBlur: 0, //阴影模糊大小
-            shadowColor: '#fff', //阴影颜色
-          },
+      type: 'gauge',
+      radius: '75%',
+      min: 0,
+      max: 100,
+      splitNumber: 10,
+      startAngle: 225,
+      endAngle: -45,
+      clockwise: true,
+      splitNumber: 10,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: [
+            [0.2, 'rgba(198, 36, 32, 1)'],
+            [0.8, 'rgba(5, 147, 198, 1)'],
+            [1, 'rgba(9, 200, 112, 1)']
+          ],
+          width: 30,
+        }
+      },
+      splitLine: {
+        show: true,
+        length: 30,
+        lineStyle: {
+          width: 2,
+          color: '#eee',
+        }
+      },
+      axisLabel: {
+        show: true,
+        distance: 5,
+        formatter: '{value}',
+        color: '#333',
+        fontSize: 12,
+        fontWeight: 'normal'
+      },
+      axisTick: {
+        show: true,
+        splitNumber: 5,
+        length: 8,
+        lineStyle: {
+          color: '#fff',
+          width: 1,
+        }
+      },
+      pointer: {
+        show: true,
+        width: 8,
+        length: '80%'
+      },
+      itemStyle: {
+        color: 'auto',
+        borderWidth: 0,
+        borderColor: '#fff',
+        shadowBlur: 0,
+        shadowColor: '#fff'
+      },
+      title: {
+        show: true,
+        borderColor: '#fff',
+        borderWidth: 0,
+        borderColor: 'transparent',
+        color: '#333',
+        fontSize: 20,
+        backgroundColor: 'transparent',
+        offsetCenter: [0, '-40%']
+      },
+      detail: {
+        show: true,
+        borderColor: '#fff',
+        borderWidth: 0,
+        borderColor: 'transparent',
+        color: 'auto',
+        fontSize: 30,
+        backgroundColor: 'transparent',
+        offsetCenter: [0, '40%']
+      },
+      data: [{
+        value: 50,
+        name: '完成率'
+      }]
 
-        },
-        splitLine: { //分割线样式
-          show: true,
-          length: 30,
-          lineStyle: {
-            width: 2, //线宽
-            type: 'solid',
-            color: [
-              [0.2, '#91c7ae'],
-              [0.8, '#63869e'],
-              [1, '#c23531']
-            ],
-            shadowBlur: 0, //阴影模糊大小
-            shadowColor: '#fff', //阴影颜色
-          },
-        },
-        asisTick: { //刻度
-          show: true,
-          splitNumber: 5,
-          length: 8,
-          lineStyle: {
-            width: 2, //线宽
-            type: 'solid',
-            color: [
-              [0.2, '#91c7ae'],
-              [0.8, '#63869e'],
-              [1, '#c23531']
-            ],
-            shadowBlur: 0, //阴影模糊大小
-            shadowColor: '#fff', //阴影颜色
-          },
-        },
-        pointer: { //指针
-          show: true,
-          length: '80%',
-          width: 8,
-        },
-        itemStyle: { //指针样式
-          color: 'auto'
-        },
-        title: {
-          show: true,
-          color: '#333'
-        },
-        detail: {
-          show: true
-        },
-        offsetCenter: [0, '-40%'],
-        data: [{
-          value: 50,
-          name: '完成率'
-        }]
-
-      }],
+    }],
     backgroundColor: "#fff"
   },
   others: {
-    openMenu: [1, 2, 8, 9],
+    openMenu: [1, 2, 9],
     datasways: 1, //获取方式
     datasource: "", //数据源
     datasql: "select a.natural_village_name,count(b.building_id ) as count from building b left join natural_village a on a.natural_village_id=b.natural_village_id GROUP BY a.natural_village_name", //sql语句
     datasurl: "", //URL地址
     datajson: "",
     updated: 1
-
   }
 
 };

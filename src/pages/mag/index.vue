@@ -61,20 +61,20 @@ export default {
                 }
               ]
           },
-          {
-            name:"权限管理",
-            icon:"icon-quanxian",
-            open:true,
-            child:[
-              {
-                name:"角色管理",
-                path:"/mag/role"
-              }
-            ]
-          },
+          // {
+          //   name:"权限管理",
+          //   icon:"icon-quanxian",
+          //   open:true,
+          //   child:[
+          //     {
+          //       name:"角色管理",
+          //       path:"/mag/role"
+          //     }
+          //   ]
+          // },
           {
             name:"模板管理",
-            icon:"icon-moban1",
+            icon:"icon-moban2",
             open:true,
             child:[
               {

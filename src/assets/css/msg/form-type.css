@@ -1,4 +1,9 @@
 
+#form-type{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 #form-type>.top-bar{}
 #form-type>.top-bar>.title{
   height: 60px;
@@ -32,8 +37,11 @@
   font-size: 15px;
 }
 #form-type>.child-container{
-  padding: 12px 20px;
+  padding: 0 20px;
+  margin: 12px 0;
   box-sizing: border-box;
+  flex-grow: 1;
+  overflow: scroll;
 }
 #form-type .child-form{
   /* min-height: 400px; */

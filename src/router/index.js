@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/pages/login'
 import Design from '@/pages/design'
 import magIndex from '@/pages/mag/index.vue'
 import magMyForm from '@/pages/mag/my-chart.vue'
@@ -12,11 +13,20 @@ Vue.use(Router)
 export default new Router({
   linkActiveClass: 'active',
   routes: [
-    { path: '/', redirect: '/mag/my-chart' },
-    
+    { path: '/', redirect: '/login' },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
     {
       path: '/design',
       name: 'design',
+      component: Design
+    },
+    {
+      path: '/design-child',
+      name: 'design-child',
       component: Design
     },
     {

@@ -40,10 +40,10 @@
         <el-dialog title="新建分类"  :visible.sync="dialog_form" >
         <el-form label-position="left" label-width="80px">
           <el-form-item label="名称" >
-            <el-input  auto-complete="off" v-model="form.typeName"></el-input>
+            <el-input clearable auto-complete="off" v-model="form.typeName"></el-input>
           </el-form-item>
           <el-form-item label="编码/Key">
-            <el-input auto-complete="off" v-model="form.typeCode"></el-input>
+            <el-input clearable auto-complete="off" v-model="form.typeCode"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -54,10 +54,10 @@
       <el-dialog title="修改分类"  :visible.sync="dialog_form_edit" >
         <el-form label-position="left" label-width="80px">
           <el-form-item label="名称" >
-            <el-input  auto-complete="off" v-model="form_edit.typeName"></el-input>
+            <el-input clearable auto-complete="off" v-model="form_edit.typeName"></el-input>
           </el-form-item>
           <el-form-item label="编码/Key">
-            <el-input auto-complete="off" v-model="form_edit.typeCode"></el-input>
+            <el-input clearable auto-complete="off" v-model="form_edit.typeCode"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">

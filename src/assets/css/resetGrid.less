@@ -1,0 +1,13 @@
+@columns: 6;
+.gs-item(@n) when (@n > 0) {
+  .gs-item(@n - 1);
+
+  &[data-gs-width="@{n}"] { width: (100% / @columns) * @n; }
+  &[data-gs-x="@{n}"] { left: (100% / @columns) * @n; }
+  &[data-gs-min-width="@{n}"] { min-width: (100% / @columns) * @n; }
+  &[data-gs-max-width="@{n}"] { max-width: (100% / @columns) * @n; }
+}
+
+.grid-stack-item {
+  .gs-item(@columns);
+}

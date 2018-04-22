@@ -137,21 +137,24 @@
   position: absolute;
   top: 50px;
   right: 0;
-  background-color: #4b5c65;
   color: #fff;
   max-height: 0;
   overflow: hidden;
   transition: .5s;
   z-index: 10;
+
 }
 
 .dn_btngroup_item:hover>.dn_mod {
-  max-height: 100px;
+  max-height: 150px;
+  padding-bottom: 20px;
+  transition: .5s;
 }
 
 .dn_btngroup_item>.dn_mod ul {
   display: flex;
   flex-direction: column;
+  background-color: #4b5c65;
 }
 
 .dn_btngroup_item>.dn_mod ul li {
@@ -184,6 +187,10 @@
   flex-direction: row;
   flex-wrap: nowrap;
   height: 100%;
+  /* min-height: 620px; */
+}
+
+.dn_app_container .dn_body{
   min-height: 620px;
 }
 
@@ -193,7 +200,8 @@
   flex-grow: 1;
   transition: .5s;
   background-color: #ececec;
-  border:1px solid #ececec;
+  /* border:1px solid #ececec; */
+  border-top: 0;
 }
 
 .dn_work_content {
@@ -208,8 +216,12 @@
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 5px 1px 5px 5px;
+  padding:0 1px 0 5px;
   /* transition: .5s; */
   background-color: #ececec;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .dn_opts {
@@ -375,6 +387,7 @@
 .dn_moditm {
   margin: 5px 0 12px;
   font-size: 0;
+  width: 100%;
   cursor: pointer;
   transition: .5s;
 }
@@ -382,6 +395,16 @@
 .dn_moditm_pc>img {
   width: 100%;
   /* height: 168px; */
+  transition: .5s;
+}
+.dn_mod_img{
+  height: 168px;
+  width: 100%;
+  background-size: contain;
+  background-position: center;
+  background-color: #fafafa;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
   transition: .5s;
 }
 
@@ -397,29 +420,38 @@
 
 .dn_modbdy_title {
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 10px;
   text-align: center;
-  color: #595961;
+  /* color: #595961; */
+  color: #1c1c1c;
+    font-weight: 600;
 }
 
 .dn_noscroll {
   overflow: hidden !important;
 }
 
+/* hzh0403 */
 .dn_grid_body {
   position: relative;
   height: 100%;
   width: 100%;
   /* background-color: #fff; */
   overflow: auto;
-  border: 1px solid #f2f2f2;
+  /* border-width: 1px;
+  border-style: solid; */
+  /* border: 1px solid transparent; */
   cursor: move;
 }
 
 .dn_grid_body.active {
-  border-color: #23b7e5;
+  /* border-color: #23b7e5; */
+  border: 1px solid #23b7e5;
+  /* border-color: #23b7e5; */
   box-shadow: 0 3px 10px #a8e2f4;
+  /* box-sizing: content-box; */
+  box-sizing: border-box;
 }
 
 .dn_delbtn {
@@ -447,9 +479,7 @@
   margin: -5px 0 15px;
 }
 
-.dn_daset_rfbtn {
-  margin: 20px 0 30px;
-}
+
 
 .dn_daset_cnbtn .iconfont {
   margin: 0 6px 0 0;
@@ -457,11 +487,6 @@
   vertical-align: middle;
 }
 
-.dn_daset_rfbtn .iconfont {
-  margin: 0 6px 0 0;
-  font-size: 17px;
-  /* vertical-align: middle; */
-}
 
 .dn_daset_cnbtn button {
   color: #23b7e5;
@@ -470,11 +495,6 @@
   padding: 8px 20px 6px;
 }
 
-.dn_daset_rfbtn button {
-  color: #fff;
-  background-color: #23b7e5;
-  border-color: #23b7e5;
-}
 .dn_review{
   height: 100%;
   width: 100%;
@@ -619,4 +639,84 @@
 }
 .dn_app_container .dn_tip_title>i{
   font-size: 30px;
+}
+.dn_drillbtn{
+  margin: 20px 0 10px -5px !important;
+}
+
+
+.pingpu{
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  background-size: auto;
+}
+.tianchong{
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.lashen{
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.shiying{
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.dialogSaveType{
+  text-align: center;
+  height: 130px;
+}
+.saveTypeBtn{
+  /* margin-left: 30px; */
+  margin-top: 6px;
+  height: 100px;
+  background-color: #23b7e5;
+  border-color: #23b7e5;
+}
+.saveTypeBtn i{
+  font-size: 26px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.dn_stb1{
+  margin-right: 20px;
+}
+.dn_stb2{
+  margin-left: 20px;
+}
+
+#mag_dn .el-form{
+  width: 60%;
+  margin: auto;
+}
+#mag_dn .el-input,#mag_dn .el-select{
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
+  vertical-align: middle;
+}
+
+.modalBox .el-select .el-input .el-input__icon{
+  height: 15px;
+}
+
+.modalBox .el-input__inner{
+  overflow: hidden;
+   font-family: "微软雅黑"; 
+   font-size: 14px; 
+}
+.myc_illegalCode{
+  color: #ffa72c;
+  font-size: 12px;
+  line-height: 26px;
+  display: block;
+  height: 12px;
+}
+.myc_illegalCode>i{
+  margin-right: 6px;
+  vertical-align: middle;
+  font-size: 14px;
 }

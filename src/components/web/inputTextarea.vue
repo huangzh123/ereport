@@ -3,7 +3,7 @@
     <div class="wbipt_textarea_left">
       <span>{{setting.title}}</span>
     </div>
-    <div class="wbipt_textarea_right">
+    <div class="wbipt_textarea_right" v-loading="setting.loading">
       <textarea 
       v-if="setting.model" 
       type="text"
@@ -19,45 +19,62 @@
 
 <script>
 export default {
-    props: ["setting", "cid", "contents", "others"],
+  props: ["setting", "cid", "contents", "others"],
   data() {
     return {
-      returnVal: (contents,others,str) => {
+      returnVal: (contents, others, str) => {
         let val = eval(str);
-        if(this.setting.format) val = this.setting.format(val);
-        return val; 
+        if (this.setting.format) val = this.setting.format(val);
+        return val;
       }
     };
   },
   mounted() {
     let self = this;
-    if(self.setting.init){
+    if (self.setting.init) {
       let opt = {
-            self,
-            setting: self.setting,
-            others: self.others,
-            contents: self.contents
-          }
-      self.setting.init(opt,() => {
-        
-      })
-    }else{
-
+        self,
+        setting: self.setting,
+        others: self.others,
+        contents: self.contents
+      };
+      self.setting.init(opt);
     }
   },
   methods: {
     updateValue(value) {
-      if(this.setting.reformat) value = this.setting.reformat(value);
+      let self = this;
+      if (self.setting.reformat) value = self.setting.reformat(value);
+      // console.log(value);
       let opt = {
-            self,
-            setting: self.setting,
-            others: self.others,
-            contents: self.contents,
-            cid:self.cid
-          }
-      if(this.setting.updateValue) return this.setting.updateValue(opt);
-      
-      this.$emit("updateValue", value, this.setting.model,this.cid); //自定义事件，并传参
+        self,
+        setting: self.setting,
+        others: self.others,
+        contents: self.contents,
+        cid: self.cid,
+        value:value
+      };
+      if (self.setting.updateValue) {
+        self.setting.updateValue(opt, () => {
+          self.$emit("updateValue", value, self.setting.model, self.cid); //自定义事件，并传参
+        });
+      } else {
+        self.$emit("updateValue", value, self.setting.model, self.cid); //自定义事件，并传参
+      }
+    }
+  },
+  watch: {
+    cid(val) {
+      let self = this;
+      if (self.setting.init) {
+        let opt = {
+          self,
+          setting: self.setting,
+          others: self.others,
+          contents: self.contents
+        };
+        self.setting.init(opt);
+      }
     }
   }
 };
@@ -73,7 +90,7 @@ export default {
   overflow: hidden;
 }
 .wbipt_textarea_left {
-   width: 21%;
+  width: 21%;
   min-width: 70px;
   flex-grow: 0;
   padding-right: 5px;
